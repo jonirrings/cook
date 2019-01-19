@@ -1,0 +1,16 @@
+{
+  "name": "今晚吃什么",
+  "short_name": "吃啥",
+  "description": "从已有菜谱中随机选出一个菜名，避免每天被吃什么的问题烦恼",
+  "icons": [
+    {
+      "src": "static/favicon.ico",
+      "sizes": "16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "/",
+  "display": "fullscreen",
+  "theme_color": "#B12A34",
+  "background_color": "#B12A34"
+}
