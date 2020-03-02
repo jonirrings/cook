@@ -4,9 +4,29 @@
   "description": "从已有菜谱中随机选出一个菜名，避免每天被吃什么的问题烦恼",
   "icons": [
     {
-      "src": "static/favicon.ico",
+      "src": "static/dinner-16.png",
       "sizes": "16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
+    },
+    {
+      "src": "static/dinner-64.png",
+      "sizes": "64x64",
+      "type": "image/png"
+    },
+    {
+      "src": "static/dinner-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "static/dinner-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "static/dinner-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": "/",

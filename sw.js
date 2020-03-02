@@ -1,14 +1,18 @@
 const cacheName = 'Cook';
 const contentToCache = [
     '/',
-    'index.html',
+    '/index.html',
     '/static/app.mjs',
     '/static/db.mjs',
-    '/static/favicon.icon',
+    '/static/dinner-16.png',
+    '/static/dinner-64.png',
+    '/static/dinner-128.png',
+    '/static/dinner-192.png',
+    '/static/dinner-512.png',
     '/static/recipe.json',
     '/static/style.css',
-    'https://cdnjs.cloudflare.com/ajax/libs/dexie/2.0.4/dexie.min.js',
-    'https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.min.js',
+    '/vendor/dexie.min.js',
+    '/vendor/lodash.min.js',
 ];
 self.addEventListener('install', function (e) {
     console.log('[Service Worker] Install');

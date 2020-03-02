@@ -1,8 +1,5 @@
 import * as model from './db.mjs';
 
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/static/sw.js');
-}
 // Requesting permission for Notifications after clicking on the button
 const button = document.getElementById("notifications");
 if (button) {
