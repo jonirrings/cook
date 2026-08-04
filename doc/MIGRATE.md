@@ -10,14 +10,14 @@
 
 | 层次 | 技术选型 | 说明 |
 |------|----------|------|
-| 框架 | 无（vanilla JS） | `static/app.mjs` 直写 DOM |
+| 框架 | 无（vanilla JS） | `../old/static/app.mjs` 直写 DOM |
 | 路由 | 无 | 单页面，无路由 |
 | 状态 | Dexie (IndexedDB) | 客户端数据库，存分类、菜名、关联关系 |
-| 样式 | 纯 CSS | `static/style.css` 不到 10 行 |
+| 样式 | 纯 CSS | `../old/static/style.css` 不到 10 行 |
 | 数据源 | `/static/recipe.json` | JSON 按分类组织菜谱，首次启动时填充 DB |
 | 构建 | 无 | 裸 HTML + JS，无打包 |
 | 部署 | 任意静态托管 | 当前无部署配置 |
-| PWA | Service Worker | `sw.js` 缓存所有静态资源 |
+| PWA | Service Worker | `../old/sw.js` 缓存所有静态资源 |
 | 工具库 | lodash, dexie | 两个 vendor 文件（minified） |
 
 ### 痛点
@@ -26,7 +26,7 @@
 2. **本地数据库耦合** — 数据藏在 IndexedDB 中，用户清浏览器即丢；且存在首次启动的填充延迟
 3. **单页面限制** — 无法扩展（没有搜索、按分类筛选、详情页等能力）
 4. **零构建** — ES modules 裸跑，没有 HMR、Tree Shaking、代码拆分
-5. **Service Worker 手动维护** — 缓存列表硬编码在 `sw.js` 中
+5. **Service Worker 手动维护** — 缓存列表硬编码在 `../old/sw.js` 中
 6. **UI 体验简陋** — 只有按钮 + 文字，无动画、无加载态、无错误处理
 7. **无后端** — 无法持久化用户添加的菜谱，所有数据在客户端，换设备就丢了
 
