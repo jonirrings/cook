@@ -23,5 +23,12 @@
     "traces": {
       "enabled": true
     }
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "cook-db",
+      "database_id": "9b012e37-6cca-4b25-9365-dd62439db57e"
+    }
+  ]
 }
