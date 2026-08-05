@@ -7,6 +7,9 @@
     "nodejs_compat"
   ],
   "workers_dev": false,
+  "vars": {
+    "BETTER_AUTH_URL": "https://cook.jonirrings.com"
+  },
   "routes": [
     {
       "pattern": "cook.jonirrings.com",
