@@ -28,7 +28,8 @@
     {
       "binding": "DB",
       "database_name": "cook-db",
-      "database_id": "9b012e37-6cca-4b25-9365-dd62439db57e"
+      "database_id": "9b012e37-6cca-4b25-9365-dd62439db57e",
+      "migrations_dir": "drizzle"
     }
   ]
 }

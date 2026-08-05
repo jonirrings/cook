@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "cf-types": "wrangler types",
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
     "build": "vite build",
@@ -12,7 +13,11 @@
     "format": "prettier --write . && eslint --fix",
     "check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "deploy": "pnpm run build && wrangler deploy"
+    "deploy": "pnpm run build && wrangler deploy",
+    "auth:generate": "pnpm dlx auth@latest generate --output src/db/auth.schema.ts -y",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate:prod": "wrangler d1 migrations apply cook-db --remote",
+    "db:migrate:local": "wrangler d1 migrations apply cook-db --local"
   },
   "dependencies": {
     "@ark-ui/solid": "^5.38.0",
@@ -37,6 +42,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk-solid": "^1.1.2",
+    "drizzle-orm": "^0.45.2",
     "embla-carousel-solid": "^8.6.0",
     "solid-js": "^1.9.12",
     "solid-sonner": "^0.3.1",
@@ -48,8 +54,11 @@
     "@tanstack/devtools-vite": "latest",
     "@tanstack/eslint-config": "latest",
     "@tanstack/router-cli": "^1.133.21",
+    "@types/node": "^26.1.2",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9.20.0",
     "prettier": "^3.8.1",
+    "tsx": "^4.23.5",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "vite-plugin-solid": "^2.11.12",
