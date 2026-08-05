@@ -17,7 +17,8 @@
     "auth:generate": "pnpm dlx auth@latest generate --output src/db/auth.schema.ts -y",
     "db:generate": "drizzle-kit generate",
     "db:migrate:prod": "wrangler d1 migrations apply cook-db --remote",
-    "db:migrate:local": "wrangler d1 migrations apply cook-db --local"
+    "db:migrate:local": "wrangler d1 migrations apply cook-db --local",
+    "db:seed": "tsx drizzle/seed.ts"
   },
   "dependencies": {
     "@ark-ui/solid": "^5.38.0",

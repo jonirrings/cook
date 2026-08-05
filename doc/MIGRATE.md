@@ -520,24 +520,24 @@ export type Db = ReturnType<typeof getDb>
 
 ### 阶段 0：项目脚手架 (预计 1.5 小时)
 
-- [ ] 从 `tanstack-solid-demo` 复制基础设施文件并裁剪
+- [x] 从 `tanstack-solid-demo` 复制基础设施文件并裁剪
   - `package.json` → 去掉 better-auth-demo 相关，保留核心 + 新增依赖
   - `tsconfig.json` → 适配 cook 项目名
   - `vite.config.ts` → 保留核心插件 + 加入 vite-plugin-pwa
   - `tsr.config.json` → 不变
   - `wrangler.jsonc` → 改 name + 加入 D1 binding
   - `.gitignore` → 不变
-- [ ] 创建 `drizzle/` 目录、`src/db/` 目录
-- [ ] 确认 `pnpm-workspace.yaml` 包含 cook
-- [ ] `pnpm install`
-- [ ] 创建 D1 数据库：`npx wrangler d1 create cook-db`
+- [x] 创建 `drizzle/` 目录、`src/db/` 目录
+- [x] 确认 `pnpm-workspace.yaml` 包含 cook
+- [x] `pnpm install`
+- [x] 创建 D1 数据库：`npx wrangler d1 create cook-db`
 
 ### 阶段 1：数据库 + ORM (预计 1 小时)
 
-- [ ] 编写 `drizzle/schema.ts`（auth 表 + 业务表）
-- [ ] 编写 `src/db/index.ts`（D1 drizzle 客户端）
-- [ ] 编写 `drizzle.config.ts`
-- [ ] 生成迁移：`npx drizzle-kit generate`
+- [x] 编写 `drizzle/schema.ts`（auth 表 + 业务表）
+- [x] 编写 `src/db/index.ts`（D1 drizzle 客户端）
+- [x] 编写 `drizzle.config.ts`
+- [x] 生成迁移：`npx drizzle-kit generate`
 - [ ] 初始化种子数据 Server Function：`src/data/recipes.json` → D1
 
 ### 阶段 2：Better Auth (预计 1 小时)
