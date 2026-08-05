@@ -2,3 +2,9 @@ package-lock.json
 pnpm-lock.yaml
 yarn.lock
 routeTree.gen.ts
+/old
+worker-configuration.d.ts
+*.json
+*.md
+eslint.config.js
+prettier.config.js
