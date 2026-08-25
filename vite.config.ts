@@ -6,6 +6,8 @@ import { tanstackStart } from '@tanstack/solid-start/plugin/vite'
 
 import solidPlugin from 'vite-plugin-solid'
 import { cloudflare } from '@cloudflare/vite-plugin'
+// import AutoGitInfo from 'unplugin-auto-git-info/vite'
+// import buildInfoFile from 'vite-plugin-build-info-file'
 
 export default defineConfig({
   resolve: { tsconfigPaths: true },

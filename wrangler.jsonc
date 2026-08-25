@@ -27,6 +27,9 @@
       "enabled": true
     }
   },
+  "placement": {
+    "mode": "smart"
+  },
   "d1_databases": [
     {
       "binding": "DB",

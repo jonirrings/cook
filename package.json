@@ -1,5 +1,6 @@
 {
   "name": "cook",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -23,28 +24,31 @@
     "db:seed": "tsx drizzle/seed.ts"
   },
   "dependencies": {
-    "@ark-ui/solid": "^5.39.0",
+    "@ark-ui/solid": "^5.39.1",
     "@corvu/drawer": "^0.2.4",
     "@corvu/otp-field": "^0.1.4",
     "@corvu/resizable": "^0.2.5",
     "@fontsource/inter": "^5.3.0",
     "@kobalte/core": "^0.13.13",
     "@solid-primitives/refs": "^1.1.4",
+    "@tanstack/solid-devtools": "^0.8.12",
     "@tanstack/solid-form": "latest",
+    "@tanstack/solid-form-devtools": "latest",
     "@tanstack/solid-query": "latest",
     "@tanstack/solid-query-devtools": "latest",
     "@tanstack/solid-router": "latest",
     "@tanstack/solid-router-devtools": "latest",
     "@tanstack/solid-start": "latest",
     "@tanstack/solid-store": "latest",
-    "@tanstack/solid-table": "^9.1.2",
-    "@tanstack/solid-table-devtools": "^9.2.0",
+    "@tanstack/solid-table": "latest",
+    "@tanstack/solid-table-devtools": "latest",
+    "@tanstack/start-static-server-functions": "latest",
     "@tanstack/store": "latest",
-    "better-auth": "^1.7.1",
+    "better-auth": "^1.7.2",
     "chart.js": "^4.5.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "cmdk-solid": "^1.1.2",
+    "cmdk-solid": "^1.2.0",
     "drizzle-orm": "^0.45.2",
     "embla-carousel-solid": "^8.6.0",
     "solid-js": "^1.9.15",
@@ -52,30 +56,31 @@
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.53.1",
+    "@cloudflare/vite-plugin": "^1.54.4",
     "@tailwindcss/vite": "^4.3.3",
     "@tanstack/devtools-vite": "latest",
     "@tanstack/eslint-config": "latest",
+    "@tanstack/eslint-plugin-query": "latest",
     "@tanstack/eslint-plugin-router": "latest",
     "@tanstack/router-cli": "latest",
     "@tanstack/solid-router-ssr-query": "latest",
-    "@types/node": "^26.2.0",
+    "@types/node": "^26.4.1",
     "better-sqlite3": "^13.0.3",
     "drizzle-kit": "^0.31.10",
-    "eslint": "^9.39.5",
+    "eslint": "^10.9.1",
     "prettier": "^3.9.6",
     "tailwindcss": "^4.3.3",
     "tailwindcss-animate": "^1.0.7",
-    "tsx": "^4.23.12",
+    "tsx": "^4.23.13",
     "typescript": "^6.0.3",
     "vite": "^8.2.2",
     "vite-plugin-solid": "^2.11.14",
-    "wrangler": "^4.125.0"
+    "wrangler": "^4.129.0"
   },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "11.23.0",
+      "version": "11.24.0",
       "onFail": "download"
     }
   }

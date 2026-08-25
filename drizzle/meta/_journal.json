@@ -8,6 +8,13 @@
       "when": 1785904653272,
       "tag": "0000_married_zarda",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788080529596,
+      "tag": "0001_smooth_ma_gnuci",
+      "breakpoints": true
     }
   ]
 }

@@ -10,11 +10,39 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HealthRouteImport } from './routes/health'
+import { Route as LuckyRouteImport } from './routes/lucky'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as RecipesIdRouteImport } from './routes/recipes/$id'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiCategoriesIndexRouteImport } from './routes/api/categories/index'
+import { Route as ApiCategoriesIdRouteImport } from './routes/api/categories/$id'
+import { Route as ApiRecipesIndexRouteImport } from './routes/api/recipes/index'
+import { Route as ApiRecipesIdRouteImport } from './routes/api/recipes/$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HealthRoute = HealthRouteImport.update({
+  id: '/health',
+  path: '/health',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LuckyRoute = LuckyRouteImport.update({
+  id: '/lucky',
+  path: '/lucky',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/_authenticated/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesIdRoute = RecipesIdRouteImport.update({
+  id: '/recipes/$id',
+  path: '/recipes/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -22,31 +50,114 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCategoriesIndexRoute = ApiCategoriesIndexRouteImport.update({
+  id: '/api/categories/',
+  path: '/api/categories/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCategoriesIdRoute = ApiCategoriesIdRouteImport.update({
+  id: '/api/categories/$id',
+  path: '/api/categories/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRecipesIndexRoute = ApiRecipesIndexRouteImport.update({
+  id: '/api/recipes/',
+  path: '/api/recipes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiRecipesIdRoute = ApiRecipesIdRouteImport.update({
+  id: '/api/recipes/$id',
+  path: '/api/recipes/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/health': typeof HealthRoute
+  '/lucky': typeof LuckyRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/recipes/$id': typeof RecipesIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/categories/$id': typeof ApiCategoriesIdRoute
+  '/api/recipes/$id': typeof ApiRecipesIdRoute
+  '/api/categories/': typeof ApiCategoriesIndexRoute
+  '/api/recipes/': typeof ApiRecipesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/health': typeof HealthRoute
+  '/lucky': typeof LuckyRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/recipes/$id': typeof RecipesIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/categories/$id': typeof ApiCategoriesIdRoute
+  '/api/recipes/$id': typeof ApiRecipesIdRoute
+  '/api/categories': typeof ApiCategoriesIndexRoute
+  '/api/recipes': typeof ApiRecipesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/health': typeof HealthRoute
+  '/lucky': typeof LuckyRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/recipes/$id': typeof RecipesIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/categories/$id': typeof ApiCategoriesIdRoute
+  '/api/recipes/$id': typeof ApiRecipesIdRoute
+  '/api/categories/': typeof ApiCategoriesIndexRoute
+  '/api/recipes/': typeof ApiRecipesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/auth/$'
+  fullPaths:
+    | '/'
+    | '/health'
+    | '/lucky'
+    | '/dashboard'
+    | '/recipes/$id'
+    | '/api/auth/$'
+    | '/api/categories/$id'
+    | '/api/recipes/$id'
+    | '/api/categories/'
+    | '/api/recipes/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/auth/$'
-  id: '__root__' | '/' | '/api/auth/$'
+  to:
+    | '/'
+    | '/health'
+    | '/lucky'
+    | '/dashboard'
+    | '/recipes/$id'
+    | '/api/auth/$'
+    | '/api/categories/$id'
+    | '/api/recipes/$id'
+    | '/api/categories'
+    | '/api/recipes'
+  id:
+    | '__root__'
+    | '/'
+    | '/health'
+    | '/lucky'
+    | '/_authenticated/dashboard'
+    | '/recipes/$id'
+    | '/api/auth/$'
+    | '/api/categories/$id'
+    | '/api/recipes/$id'
+    | '/api/categories/'
+    | '/api/recipes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  HealthRoute: typeof HealthRoute
+  LuckyRoute: typeof LuckyRoute
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  RecipesIdRoute: typeof RecipesIdRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiCategoriesIdRoute: typeof ApiCategoriesIdRoute
+  ApiRecipesIdRoute: typeof ApiRecipesIdRoute
+  ApiCategoriesIndexRoute: typeof ApiCategoriesIndexRoute
+  ApiRecipesIndexRoute: typeof ApiRecipesIndexRoute
 }
 
 declare module '@tanstack/solid-router' {
@@ -58,6 +169,34 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/health': {
+      id: '/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof HealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lucky': {
+      id: '/lucky'
+      path: '/lucky'
+      fullPath: '/lucky'
+      preLoaderRoute: typeof LuckyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/$id': {
+      id: '/recipes/$id'
+      path: '/recipes/$id'
+      fullPath: '/recipes/$id'
+      preLoaderRoute: typeof RecipesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -65,12 +204,48 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/categories/': {
+      id: '/api/categories/'
+      path: '/api/categories'
+      fullPath: '/api/categories/'
+      preLoaderRoute: typeof ApiCategoriesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/categories/$id': {
+      id: '/api/categories/$id'
+      path: '/api/categories/$id'
+      fullPath: '/api/categories/$id'
+      preLoaderRoute: typeof ApiCategoriesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/recipes/': {
+      id: '/api/recipes/'
+      path: '/api/recipes'
+      fullPath: '/api/recipes/'
+      preLoaderRoute: typeof ApiRecipesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/recipes/$id': {
+      id: '/api/recipes/$id'
+      path: '/api/recipes/$id'
+      fullPath: '/api/recipes/$id'
+      preLoaderRoute: typeof ApiRecipesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  HealthRoute: HealthRoute,
+  LuckyRoute: LuckyRoute,
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  RecipesIdRoute: RecipesIdRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiCategoriesIdRoute: ApiCategoriesIdRoute,
+  ApiRecipesIdRoute: ApiRecipesIdRoute,
+  ApiCategoriesIndexRoute: ApiCategoriesIndexRoute,
+  ApiRecipesIndexRoute: ApiRecipesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
