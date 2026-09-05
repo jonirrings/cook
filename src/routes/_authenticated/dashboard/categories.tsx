@@ -187,7 +187,7 @@ function CategoriesAdminPage() {
                       {category.slug}
                     </TableCell>
                     <TableCell class="text-muted-foreground">
-                      {category.createdAt?.toLocaleString('zh-CN') ?? '—'}
+                      {category.createdAt.toLocaleString('zh-CN')}
                     </TableCell>
                     <TableCell class="text-right">
                       <div class="flex justify-end gap-2">

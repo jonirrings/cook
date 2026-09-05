@@ -296,9 +296,9 @@ Server Function: seedDefaultRecipes()
 ```jsonc
 // public/manifest.json
 {
-  "name": "今晚吃什么",
+  "name": "今晚吃啥",
   "short_name": "吃啥",
-  "description": "从已有菜谱中随机选出一个菜名，避免每天被吃什么的问题烦恼",
+  "description": "从已有菜谱中随机选出一个菜名，避免每天被吃啥的问题烦恼",
   "start_url": "/",
   "display": "standalone",        // standalone 才能隐藏浏览器 chrome
   "orientation": "portrait",
@@ -351,7 +351,7 @@ VitePWA({
 
 ```
 ┌──────────────────────────────┐
-│ 🍳 安装「今晚吃什么」到桌面    │
+│ 🍳 安装「今晚吃啥」到桌面    │
 │ 随时随地摇一摇，随机出菜       │
 │ [ 稍后再说 ]   [ 安装 ]       │
 └──────────────────────────────┘

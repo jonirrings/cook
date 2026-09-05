@@ -39,10 +39,10 @@ function Home() {
           <img src="/dinner-192.png" alt="" class="size-16 drop-shadow-sm" />
           <div class="space-y-3">
             <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">
-              今晚吃什么？
+              今晚吃啥？
             </h1>
             <p class="text-lg text-muted-foreground">
-              解决每天三大烦恼之一：早上吃什么、中午吃什么、晚上吃什么
+              解决每天三大烦恼之一：早上吃啥、中午吃啥、晚上吃啥
             </p>
           </div>
           <div class="flex flex-wrap items-center justify-center gap-3">

@@ -247,7 +247,7 @@ function RecipesAdminPage() {
                       {recipe.description || '—'}
                     </TableCell>
                     <TableCell class="text-muted-foreground">
-                      {recipe.createdAt?.toLocaleString('zh-CN') ?? '—'}
+                      {recipe.createdAt.toLocaleString('zh-CN')}
                     </TableCell>
                     <TableCell class="text-right">
                       <div class="flex justify-end gap-2">

@@ -51,7 +51,7 @@ function RecipesPage() {
       <div>
         <h1 class="text-3xl font-bold">全部菜谱</h1>
         <p class="mt-1 text-sm text-muted-foreground">
-          不知道吃什么？看看大家的菜谱找灵感
+          不知道吃啥？看看大家的菜谱找灵感
         </p>
       </div>
 

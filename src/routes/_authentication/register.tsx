@@ -91,7 +91,7 @@ function RegisterPage() {
       <Card class="w-full max-w-sm">
         <CardHeader>
           <CardTitle>注册</CardTitle>
-          <CardDescription>创建账号，解决今晚吃什么</CardDescription>
+          <CardDescription>创建账号，解决今晚吃啥</CardDescription>
         </CardHeader>
         <form onSubmit={onSubmit}>
           <CardContent class="space-y-4">

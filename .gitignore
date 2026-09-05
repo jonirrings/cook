@@ -11,6 +11,8 @@ dist-ssr
 .vinxi
 __unconfig*
 *.db
+# exported
+cook-import.sql
 
 # ide
 .vscode/

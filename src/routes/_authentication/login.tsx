@@ -87,7 +87,7 @@ function LoginPage() {
       <Card class="w-full max-w-sm">
         <CardHeader>
           <CardTitle>登录</CardTitle>
-          <CardDescription>登录你的账号，记录今晚吃什么</CardDescription>
+          <CardDescription>登录你的账号，记录今晚吃啥</CardDescription>
         </CardHeader>
         <form onSubmit={onSubmit}>
           <CardContent class="space-y-4">

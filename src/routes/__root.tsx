@@ -31,9 +31,9 @@ export const Route = createRootRouteWithContext()({
     meta: [
       { charSet: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { title: '今晚吃什么' },
+      { title: '今晚吃啥' },
       { name: 'author', content: 'Jonir Rings' },
-      { name: 'description', content: '解决每天三大烦恼之一的晚上吃什么' },
+      { name: 'description', content: '解决每天三大烦恼之一的晚上吃啥' },
       { name: 'theme-color', content: '#B12A34' },
     ],
   }),

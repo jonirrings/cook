@@ -1,4 +1,4 @@
-import type { ValidComponent } from 'solid-js'
+import type { JSX, ValidComponent } from 'solid-js'
 import { Match, splitProps, Switch } from 'solid-js'
 
 import * as CheckboxPrimitive from '@kobalte/core/checkbox'
@@ -7,12 +7,18 @@ import type { PolymorphicProps } from '@kobalte/core/polymorphic'
 import { cn } from '~/lib/utils'
 
 type CheckboxRootProps<T extends ValidComponent = 'div'> =
-  CheckboxPrimitive.CheckboxRootProps<T> & { class?: string | undefined }
+  CheckboxPrimitive.CheckboxRootProps<T> & {
+    class?: string | undefined
+    children?: JSX.Element
+  }
 
 const Checkbox = <T extends ValidComponent = 'div'>(
   props: PolymorphicProps<T, CheckboxRootProps<T>>,
 ) => {
-  const [local, others] = splitProps(props as CheckboxRootProps, ['class'])
+  const [local, others] = splitProps(props as CheckboxRootProps, [
+    'class',
+    'children',
+  ])
   return (
     <CheckboxPrimitive.Root
       class={cn('items-top group relative flex space-x-2', local.class)}
@@ -53,6 +59,7 @@ const Checkbox = <T extends ValidComponent = 'div'>(
           </Switch>
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Control>
+      {local.children}
     </CheckboxPrimitive.Root>
   )
 }

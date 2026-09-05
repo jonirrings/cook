@@ -16,7 +16,7 @@ export const auth = betterAuth({
 
       await sendEmail({
         to: user.email,
-        subject: '重置密码 - 今晚吃什么',
+        subject: '重置密码 - 今晚吃啥',
         html: `
           <p>你好，${user.name}：</p>
           <p>点击下方链接重置密码（1 小时内有效）：</p>

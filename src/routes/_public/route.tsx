@@ -57,7 +57,7 @@ function PublicLayout() {
 
       <footer class="border-t">
         <div class="mx-auto flex max-w-5xl flex-col items-center gap-1 px-4 py-6 text-sm text-muted-foreground">
-          <p>🍽️ 今晚吃什么 · 解决每天三大烦恼之一</p>
+          <p>🍽️ 今晚吃啥 · 解决每天三大烦恼之一</p>
           <p class="text-xs">© {new Date().getFullYear()} Jonir Rings</p>
         </div>
       </footer>
