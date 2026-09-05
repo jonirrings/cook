@@ -1,17 +1,36 @@
 import { Show } from 'solid-js'
-import { authClient } from '../../lib/auth-client'
+import { Link } from '@tanstack/solid-router'
+import { toast } from 'solid-sonner'
+import { Button } from '~/components/ui/button'
+import { signOut } from '~/lib/auth.functions'
+import { useInvalidateSession, useSession } from './session'
 
 export default function BetterAuthHeader() {
-  const session = authClient.useSession()
+  const session = useSession()
+  const invalidateSession = useInvalidateSession()
 
   return (
     <Show
-      when={!session().isPending}
+      when={!session.isPending}
       fallback={
         <div class="h-8 w-8 bg-neutral-100 dark:bg-neutral-800 animate-pulse" />
       }
     >
-      <Show when={session().data?.user}>
+      <Show
+        when={session.data?.user}
+        fallback={
+          <div class="flex items-center gap-2">
+            <Link to="/login">
+              <Button variant="ghost" size="sm">
+                登录
+              </Button>
+            </Link>
+            <Link to="/register">
+              <Button size="sm">注册</Button>
+            </Link>
+          </div>
+        }
+      >
         {(user) => (
           <div class="flex items-center gap-2">
             <Show
@@ -19,21 +38,30 @@ export default function BetterAuthHeader() {
               fallback={
                 <div class="h-8 w-8 bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
                   <span class="text-xs font-medium text-neutral-600 dark:text-neutral-400">
-                    {user().name?.charAt(0).toUpperCase() || 'U'}
+                    {user().name.charAt(0).toUpperCase() || 'U'}
                   </span>
                 </div>
               }
             >
               {(image) => <img src={image()} alt="" class="h-8 w-8" />}
             </Show>
-            <button
+            <span class="text-sm font-medium">{user().name}</span>
+            <Link to="/dashboard">
+              <Button variant="ghost" size="sm">
+                我的账户
+              </Button>
+            </Link>
+            <Button
+              variant="outline"
+              size="sm"
               onClick={() => {
-                void authClient.signOut()
+                void signOut()
+                  .then(() => invalidateSession())
+                  .catch((err: Error) => toast.error(err.message))
               }}
-              class="flex-1 h-9 px-4 text-sm font-medium bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-50 border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800 transition-colors"
             >
-              Sign out
-            </button>
+              登出
+            </Button>
           </div>
         )}
       </Show>

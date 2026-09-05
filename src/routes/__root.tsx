@@ -16,6 +16,8 @@ import '@fontsource/inter/400.css'
 import { HydrationScript } from 'solid-js/web'
 import { Suspense } from 'solid-js'
 
+import { Toaster } from '~/components/ui/sonner'
+
 import styleCss from '../styles.css?url'
 
 export const Route = createRootRouteWithContext()({
@@ -49,22 +51,23 @@ function RootComponent() {
         <Suspense>
           <Outlet />
           <TanStackDevtools
-              plugins={[
-                {
-                  name: "TanStack Table",
-                  render: <TableDevtoolsPanel />,
-                },
-                {
-                  name: "TanStack Query",
-                  render: <SolidQueryDevtoolsPanel />,
-                },
-                {
-                  name: 'TanStack Router',
-                  render: <TanStackRouterDevtoolsPanel />,
-                },
-              ]}
+            plugins={[
+              {
+                name: 'TanStack Table',
+                render: <TableDevtoolsPanel />,
+              },
+              {
+                name: 'TanStack Query',
+                render: <SolidQueryDevtoolsPanel />,
+              },
+              {
+                name: 'TanStack Router',
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
           />
         </Suspense>
+        <Toaster />
         <Scripts />
       </body>
     </html>
