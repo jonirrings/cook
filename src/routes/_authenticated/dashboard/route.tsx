@@ -1,4 +1,10 @@
-import { createFileRoute, Link, Outlet, redirect, useNavigate } from '@tanstack/solid-router'
+import {
+  createFileRoute,
+  Link,
+  Outlet,
+  redirect,
+  useNavigate,
+} from '@tanstack/solid-router'
 import { toast } from 'solid-sonner'
 import { Button } from '~/components/ui/button'
 import { getSession, signOut } from '~/lib/auth.functions'
@@ -41,7 +47,9 @@ function RouteComponent() {
               <Link
                 to={link.to}
                 activeOptions={{ exact: true }}
-                inactiveProps={{ class: 'text-muted-foreground hover:text-foreground' }}
+                inactiveProps={{
+                  class: 'text-muted-foreground hover:text-foreground',
+                }}
                 class="rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
               >
                 {link.label}

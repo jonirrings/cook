@@ -1,7 +1,11 @@
-import { createMemo, createSignal, For, Show } from 'solid-js'
+import { createSignal, For, Show } from 'solid-js'
 import * as CheckboxPrimitive from '@kobalte/core/checkbox'
-import { createQuery, useQueryClient } from '@tanstack/solid-query'
-import { createFileRoute, useNavigate, useSearch } from '@tanstack/solid-router'
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+  useSearch,
+} from '@tanstack/solid-router'
 import { toast } from 'solid-sonner'
 import {
   AlertDialog,
@@ -50,6 +54,15 @@ export const Route = createFileRoute('/_authenticated/dashboard/recipes')({
   // 页码和页大小从 URL 读取，是分页状态的唯一来源
   validateSearch: (search: Record<string, unknown>): PaginationSearch =>
     paginationSearchSchema.parse(search),
+  // 数据走 loader：渲染前必定完成，SSR 与客户端首帧一致，避免 hydration 不一致
+  loader: async ({ location }) => {
+    const search = paginationSearchSchema.parse(location.search)
+    const [recipes, categories] = await Promise.all([
+      listRecipes({ data: search }),
+      listAllCategories(),
+    ])
+    return { recipes, categories }
+  },
   component: RecipesAdminPage,
 })
 
@@ -73,21 +86,12 @@ const emptyForm = (): RecipeForm => ({
 
 function RecipesAdminPage() {
   const navigate = useNavigate()
+  const router = useRouter()
   const search = useSearch({ from: '/_authenticated/dashboard/recipes' })
-  const queryClient = useQueryClient()
+  const data = Route.useLoaderData()
 
   const page = () => search().page ?? 1
   const size = () => search().size ?? 12
-
-  const recipesQuery = createQuery(() => ({
-    queryKey: ['admin-recipes', page(), size()],
-    queryFn: () => listRecipes({ data: { page: page(), size: size() } }),
-  }))
-
-  const categoriesQuery = createQuery(() => ({
-    queryKey: ['admin-all-categories'],
-    queryFn: () => listAllCategories(),
-  }))
 
   // 弹窗状态：null 关闭 / 'create' 新建 / recipe 对象编辑
   const [dialogState, setDialogState] = createSignal<
@@ -108,8 +112,8 @@ function RecipesAdminPage() {
     })
   }
 
-  const refresh = () =>
-    queryClient.invalidateQueries({ queryKey: ['admin-recipes'] })
+  // 增删改后重新跑 loader 刷新列表
+  const refresh = () => router.invalidate()
 
   function openCreate() {
     setForm(emptyForm())
@@ -185,7 +189,7 @@ function RecipesAdminPage() {
     }
   }
 
-  const recipes = createMemo(() => recipesQuery.data?.items ?? [])
+  const recipes = () => data().recipes.items
 
   return (
     <div class="space-y-4">
@@ -198,12 +202,6 @@ function RecipesAdminPage() {
         </div>
         <Button onClick={openCreate}>新建菜谱</Button>
       </div>
-
-      <Show when={recipesQuery.isError}>
-        <p class="text-sm text-destructive">
-          加载失败：{recipesQuery.error?.message}
-        </p>
-      </Show>
 
       <div class="overflow-x-auto rounded-lg border">
         <Table>
@@ -219,78 +217,64 @@ function RecipesAdminPage() {
           </TableHeader>
           <TableBody>
             <Show
-              when={!recipesQuery.isPending}
+              when={recipes().length > 0}
               fallback={
                 <TableRow>
                   <TableCell
                     colSpan={6}
                     class="py-8 text-center text-muted-foreground"
                   >
-                    加载中…
+                    暂无菜谱，点击右上角「新建菜谱」
                   </TableCell>
                 </TableRow>
               }
             >
-              <Show
-                when={recipes().length > 0}
-                fallback={
+              <For each={recipes()}>
+                {(recipe) => (
                   <TableRow>
-                    <TableCell
-                      colSpan={6}
-                      class="py-8 text-center text-muted-foreground"
-                    >
-                      暂无菜谱，点击右上角「新建菜谱」
+                    <TableCell>{recipe.id}</TableCell>
+                    <TableCell class="font-medium">{recipe.name}</TableCell>
+                    <TableCell>
+                      <div class="flex flex-wrap gap-1">
+                        <For each={recipe.categories}>
+                          {(category) => (
+                            <Badge variant="secondary">{category.name}</Badge>
+                          )}
+                        </For>
+                      </div>
+                    </TableCell>
+                    <TableCell class="max-w-64 truncate text-muted-foreground">
+                      {recipe.description || '—'}
+                    </TableCell>
+                    <TableCell class="text-muted-foreground">
+                      {recipe.createdAt?.toLocaleString('zh-CN') ?? '—'}
+                    </TableCell>
+                    <TableCell class="text-right">
+                      <div class="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openEdit(recipe)}
+                        >
+                          编辑
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() =>
+                            setDeleteTarget({
+                              id: recipe.id,
+                              name: recipe.name,
+                            })
+                          }
+                        >
+                          删除
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
-                }
-              >
-                <For each={recipes()}>
-                  {(recipe) => (
-                    <TableRow>
-                      <TableCell>{recipe.id}</TableCell>
-                      <TableCell class="font-medium">{recipe.name}</TableCell>
-                      <TableCell>
-                        <div class="flex flex-wrap gap-1">
-                          <For each={recipe.categories}>
-                            {(category) => (
-                              <Badge variant="secondary">{category.name}</Badge>
-                            )}
-                          </For>
-                        </div>
-                      </TableCell>
-                      <TableCell class="max-w-64 truncate text-muted-foreground">
-                        {recipe.description || '—'}
-                      </TableCell>
-                      <TableCell class="text-muted-foreground">
-                        {recipe.createdAt?.toLocaleString('zh-CN') ?? '—'}
-                      </TableCell>
-                      <TableCell class="text-right">
-                        <div class="flex justify-end gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => openEdit(recipe)}
-                          >
-                            编辑
-                          </Button>
-                          <Button
-                            variant="destructive"
-                            size="sm"
-                            onClick={() =>
-                              setDeleteTarget({
-                                id: recipe.id,
-                                name: recipe.name,
-                              })
-                            }
-                          >
-                            删除
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </For>
-              </Show>
+                )}
+              </For>
             </Show>
           </TableBody>
         </Table>
@@ -299,7 +283,7 @@ function RecipesAdminPage() {
       <PaginationBar
         page={page()}
         size={size()}
-        total={recipesQuery.data?.total ?? 0}
+        total={data().recipes.total}
         onPageChange={(p) => setSearch({ page: p })}
       />
 
@@ -367,7 +351,7 @@ function RecipesAdminPage() {
             <div class="space-y-2">
               <span class="text-sm font-medium">分类</span>
               <div class="flex flex-wrap gap-x-4 gap-y-2">
-                <For each={categoriesQuery.data ?? []}>
+                <For each={data().categories}>
                   {(category) => (
                     <Checkbox
                       checked={form().categoryIds.includes(category.id)}

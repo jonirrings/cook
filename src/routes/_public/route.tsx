@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet } from '@tanstack/solid-router'
+import {ClientOnly, createFileRoute, Link, Outlet} from '@tanstack/solid-router'
 import BetterAuthHeader from '~/integrations/better-auth/header-user'
 
 export const Route = createFileRoute('/_public')({
@@ -23,7 +23,7 @@ function PublicLayout() {
               class="flex items-center gap-2 text-base font-bold tracking-tight"
             >
               <img src="/dinner-192.png" alt="" class="size-7" />
-              今晚吃什么
+              今晚吃啥
             </Link>
             <nav class="hidden items-center gap-1 sm:flex">
               {navLinks.map((link) => (
@@ -40,7 +40,9 @@ function PublicLayout() {
               ))}
             </nav>
           </div>
-          <BetterAuthHeader />
+          <ClientOnly>
+            <BetterAuthHeader />
+          </ClientOnly>
         </div>
       </header>
 

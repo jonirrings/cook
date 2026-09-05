@@ -1,5 +1,4 @@
 import { For, Show } from 'solid-js'
-import { createQuery } from '@tanstack/solid-query'
 import {
   createFileRoute,
   Link,
@@ -24,20 +23,21 @@ export const Route = createFileRoute('/_public/recipes/')({
   // 页码和页大小从 URL 读取，是分页状态的唯一来源
   validateSearch: (search: Record<string, unknown>): PaginationSearch =>
     paginationSearchSchema.parse(search),
+  // 数据走 loader：渲染前必定完成，SSR 与客户端首帧一致，避免 hydration 不一致
+  loader: async ({ location }) => {
+    const search = paginationSearchSchema.parse(location.search)
+    return listRecipes({ data: search })
+  },
   component: RecipesPage,
 })
 
 function RecipesPage() {
   const navigate = useNavigate()
   const search = useSearch({ from: '/_public/recipes/' })
+  const data = Route.useLoaderData()
 
   const page = () => search().page ?? 1
   const size = () => search().size ?? 12
-
-  const recipesQuery = createQuery(() => ({
-    queryKey: ['recipes', page(), size()],
-    queryFn: () => listRecipes({ data: { page: page(), size: size() } }),
-  }))
 
   const setSearch = (next: { page?: number; size?: number }) => {
     void navigate({
@@ -55,60 +55,49 @@ function RecipesPage() {
         </p>
       </div>
 
-      <Show when={recipesQuery.isError}>
-        <p class="text-sm text-destructive">
-          加载失败：{recipesQuery.error?.message}
-        </p>
-      </Show>
-
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Show
-          when={!recipesQuery.isPending}
-          fallback={<p class="text-sm text-muted-foreground">加载中…</p>}
+          when={data().items.length > 0}
+          fallback={<p class="text-sm text-muted-foreground">暂无菜谱</p>}
         >
-          <Show
-            when={(recipesQuery.data?.items ?? []).length > 0}
-            fallback={<p class="text-sm text-muted-foreground">暂无菜谱</p>}
-          >
-            <For each={recipesQuery.data?.items ?? []}>
-              {(recipe) => (
-                <Link
-                  to={RecipeDetailRoute.fullPath}
-                  params={{ id: `${recipe.id}` }}
-                  class="block"
-                >
-                  <Card class="h-full transition-colors hover:border-primary">
-                    <CardHeader>
-                      <div class="flex items-start justify-between gap-2">
-                        <CardTitle>{recipe.name}</CardTitle>
-                        <div class="flex flex-wrap justify-end gap-1">
-                          <For each={recipe.categories}>
-                            {(category) => (
-                              <Badge variant="secondary">{category.name}</Badge>
-                            )}
-                          </For>
-                        </div>
+          <For each={data().items}>
+            {(recipe) => (
+              <Link
+                to={RecipeDetailRoute.fullPath}
+                params={{ id: `${recipe.id}` }}
+                class="block"
+              >
+                <Card class="h-full transition-colors hover:border-primary">
+                  <CardHeader>
+                    <div class="flex items-start justify-between gap-2">
+                      <CardTitle>{recipe.name}</CardTitle>
+                      <div class="flex flex-wrap justify-end gap-1">
+                        <For each={recipe.categories}>
+                          {(category) => (
+                            <Badge variant="secondary">{category.name}</Badge>
+                          )}
+                        </For>
                       </div>
-                      <CardDescription class="line-clamp-2">
-                        {recipe.description || '暂无简介'}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent class="text-xs text-muted-foreground">
-                      用料 {recipe.ingredients?.length ?? 0} 项 · 步骤{' '}
-                      {recipe.steps?.length ?? 0} 步
-                    </CardContent>
-                  </Card>
-                </Link>
-              )}
-            </For>
-          </Show>
+                    </div>
+                    <CardDescription class="line-clamp-2">
+                      {recipe.description || '暂无简介'}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent class="text-xs text-muted-foreground">
+                    用料 {recipe.ingredients?.length ?? 0} 项 · 步骤{' '}
+                    {recipe.steps?.length ?? 0} 步
+                  </CardContent>
+                </Card>
+              </Link>
+            )}
+          </For>
         </Show>
       </div>
 
       <PaginationBar
         page={page()}
         size={size()}
-        total={recipesQuery.data?.total ?? 0}
+        total={data().total}
         onPageChange={(p) => setSearch({ page: p })}
       />
     </div>

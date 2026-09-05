@@ -1,6 +1,10 @@
 import { createSignal, For, Show } from 'solid-js'
-import { createQuery, useQueryClient } from '@tanstack/solid-query'
-import { createFileRoute, useNavigate, useSearch } from '@tanstack/solid-router'
+import {
+  createFileRoute,
+  useNavigate,
+  useRouter,
+  useSearch,
+} from '@tanstack/solid-router'
 import { toast } from 'solid-sonner'
 import {
   AlertDialog,
@@ -45,21 +49,22 @@ export const Route = createFileRoute('/_authenticated/dashboard/categories')({
   // 页码和页大小从 URL 读取，是分页状态的唯一来源
   validateSearch: (search: Record<string, unknown>): PaginationSearch =>
     paginationSearchSchema.parse(search),
+  // 数据走 loader：渲染前必定完成，SSR 与客户端首帧一致，避免 hydration 不一致
+  loader: async ({ location }) => {
+    const search = paginationSearchSchema.parse(location.search)
+    return listCategories({ data: search })
+  },
   component: CategoriesAdminPage,
 })
 
 function CategoriesAdminPage() {
   const navigate = useNavigate()
+  const router = useRouter()
   const search = useSearch({ from: '/_authenticated/dashboard/categories' })
-  const queryClient = useQueryClient()
+  const data = Route.useLoaderData()
 
   const page = () => search().page ?? 1
   const size = () => search().size ?? 12
-
-  const categoriesQuery = createQuery(() => ({
-    queryKey: ['admin-categories', page(), size()],
-    queryFn: () => listCategories({ data: { page: page(), size: size() } }),
-  }))
 
   // 弹窗状态：null 关闭 / 'create' 新建 / category 对象编辑
   const [dialogState, setDialogState] = createSignal<
@@ -77,8 +82,8 @@ function CategoriesAdminPage() {
     })
   }
 
-  const refresh = () =>
-    queryClient.invalidateQueries({ queryKey: ['admin-categories'] })
+  // 增删改后重新跑 loader 刷新列表
+  const refresh = () => router.invalidate()
 
   function openCreate() {
     setName('')
@@ -148,12 +153,6 @@ function CategoriesAdminPage() {
         <Button onClick={openCreate}>新建分类</Button>
       </div>
 
-      <Show when={categoriesQuery.isError}>
-        <p class="text-sm text-destructive">
-          加载失败：{categoriesQuery.error?.message}
-        </p>
-      </Show>
-
       <div class="overflow-x-auto rounded-lg border">
         <Table>
           <TableHeader>
@@ -167,64 +166,50 @@ function CategoriesAdminPage() {
           </TableHeader>
           <TableBody>
             <Show
-              when={!categoriesQuery.isPending}
+              when={data().items.length > 0}
               fallback={
                 <TableRow>
                   <TableCell
                     colSpan={5}
                     class="py-8 text-center text-muted-foreground"
                   >
-                    加载中…
+                    暂无分类，点击右上角「新建分类」
                   </TableCell>
                 </TableRow>
               }
             >
-              <Show
-                when={(categoriesQuery.data?.items ?? []).length > 0}
-                fallback={
+              <For each={data().items}>
+                {(category) => (
                   <TableRow>
-                    <TableCell
-                      colSpan={5}
-                      class="py-8 text-center text-muted-foreground"
-                    >
-                      暂无分类，点击右上角「新建分类」
+                    <TableCell>{category.id}</TableCell>
+                    <TableCell class="font-medium">{category.name}</TableCell>
+                    <TableCell class="text-muted-foreground">
+                      {category.slug}
+                    </TableCell>
+                    <TableCell class="text-muted-foreground">
+                      {category.createdAt?.toLocaleString('zh-CN') ?? '—'}
+                    </TableCell>
+                    <TableCell class="text-right">
+                      <div class="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openEdit(category)}
+                        >
+                          编辑
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => setDeleteTarget(category)}
+                        >
+                          删除
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
-                }
-              >
-                <For each={categoriesQuery.data?.items ?? []}>
-                  {(category) => (
-                    <TableRow>
-                      <TableCell>{category.id}</TableCell>
-                      <TableCell class="font-medium">{category.name}</TableCell>
-                      <TableCell class="text-muted-foreground">
-                        {category.slug}
-                      </TableCell>
-                      <TableCell class="text-muted-foreground">
-                        {category.createdAt?.toLocaleString('zh-CN') ?? '—'}
-                      </TableCell>
-                      <TableCell class="text-right">
-                        <div class="flex justify-end gap-2">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => openEdit(category)}
-                          >
-                            编辑
-                          </Button>
-                          <Button
-                            variant="destructive"
-                            size="sm"
-                            onClick={() => setDeleteTarget(category)}
-                          >
-                            删除
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </For>
-              </Show>
+                )}
+              </For>
             </Show>
           </TableBody>
         </Table>
@@ -233,7 +218,7 @@ function CategoriesAdminPage() {
       <PaginationBar
         page={page()}
         size={size()}
-        total={categoriesQuery.data?.total ?? 0}
+        total={data().total}
         onPageChange={(p) => setSearch({ page: p })}
       />
 
