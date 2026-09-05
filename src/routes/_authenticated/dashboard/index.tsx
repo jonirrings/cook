@@ -1,5 +1,5 @@
 import { createSignal, Show } from 'solid-js'
-import { createFileRoute, redirect, useNavigate } from '@tanstack/solid-router'
+import { createFileRoute, useNavigate } from '@tanstack/solid-router'
 import { toast } from 'solid-sonner'
 import {
   AlertDialog,
@@ -21,22 +21,10 @@ import {
   TextFieldLabel,
 } from '~/components/ui/text-field'
 import { useInvalidateSession } from '~/integrations/better-auth/session'
-import { deleteAccount, getSession, signOut } from '~/lib/auth.functions'
+import { deleteAccount, signOut } from '~/lib/auth.functions'
 import { deleteAccountSchema } from '~/lib/schemas'
 
-export const Route = createFileRoute('/_authenticated/dashboard')({
-  beforeLoad: async () => {
-    const session = await getSession()
-
-    if (!session) {
-      throw redirect({
-        to: '/login',
-        search: { redirect: '/dashboard' },
-      })
-    }
-
-    return { user: session.user }
-  },
+export const Route = createFileRoute('/_authenticated/dashboard/')({
   component: Dashboard,
 })
 

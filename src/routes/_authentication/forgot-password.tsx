@@ -18,7 +18,7 @@ import {
 import { forgetPassword } from '~/lib/auth.functions'
 import { forgetPasswordSchema } from '~/lib/schemas'
 
-export const Route = createFileRoute('/forgot-password')({
+export const Route = createFileRoute('/_authentication/forgot-password')({
   component: ForgotPasswordPage,
 })
 

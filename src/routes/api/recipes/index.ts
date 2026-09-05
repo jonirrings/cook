@@ -1,11 +1,30 @@
 import { createFileRoute } from '@tanstack/solid-router'
+import { getServerRecipePage } from '~/lib/recipes.server'
+import { paginationSchema } from '~/lib/schemas'
 
-// todo：page and size params required
+// 列表接口：page / size 从 URL query 读取（?page=1&size=10）
 export const Route = createFileRoute('/api/recipes/')({
   server: {
     handlers: {
       GET: async ({ request }) => {
-        return new Response('Hello, World!')
+        const url = new URL(request.url)
+        const parsed = paginationSchema.safeParse({
+          page: url.searchParams.get('page') ?? undefined,
+          size: url.searchParams.get('size') ?? undefined,
+        })
+
+        if (!parsed.success) {
+          return Response.json(
+            { error: parsed.error.issues[0]?.message ?? '参数不合法' },
+            { status: 400 },
+          )
+        }
+
+        const result = await getServerRecipePage(
+          parsed.data.page,
+          parsed.data.size,
+        )
+        return Response.json(result)
       },
     },
   },

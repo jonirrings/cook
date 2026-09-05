@@ -2,7 +2,7 @@
 import { createFileRoute } from '@tanstack/solid-router'
 import db from '~/db'
 
-export const Route = createFileRoute('/health')({
+export const Route = createFileRoute('/_misc/health')({
   server: {
     handlers: {
       GET: async () => {

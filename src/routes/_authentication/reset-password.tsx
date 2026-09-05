@@ -28,7 +28,7 @@ type ResetPasswordSearch = {
   token?: string
 }
 
-export const Route = createFileRoute('/reset-password')({
+export const Route = createFileRoute('/_authentication/reset-password')({
   validateSearch: (search: Record<string, unknown>): ResetPasswordSearch => ({
     token: typeof search.token === 'string' ? search.token : undefined,
   }),
@@ -37,7 +37,7 @@ export const Route = createFileRoute('/reset-password')({
 
 function ResetPasswordPage() {
   const navigate = useNavigate()
-  const search = useSearch({ from: '/reset-password' })
+  const search = useSearch({ from: '/_authentication/reset-password' })
 
   const [password, setPassword] = createSignal('')
   const [confirm, setConfirm] = createSignal('')

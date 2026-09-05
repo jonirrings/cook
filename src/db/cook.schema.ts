@@ -1,4 +1,4 @@
-import { sql } from 'drizzle-orm'
+import { relations, sql } from 'drizzle-orm'
 import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core'
 
 // 分类表
@@ -38,3 +38,23 @@ export const recipeCategories = sqliteTable('recipe_categories', {
     .references(() => categories.id)
     .notNull(),
 })
+
+// 关联定义（供 db.query 关系查询使用）
+export const recipesRelations = relations(recipes, ({ many }) => ({
+  recipeCategories: many(recipeCategories),
+}))
+
+export const categoriesRelations = relations(categories, ({ many }) => ({
+  recipeCategories: many(recipeCategories),
+}))
+
+export const recipeCategoriesRelations = relations(recipeCategories, ({ one }) => ({
+  recipe: one(recipes, {
+    fields: [recipeCategories.recipeId],
+    references: [recipes.id],
+  }),
+  category: one(categories, {
+    fields: [recipeCategories.categoryId],
+    references: [categories.id],
+  }),
+}))

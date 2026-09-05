@@ -4,6 +4,7 @@ import {
   Link,
   redirect,
   useNavigate,
+  useSearch,
 } from '@tanstack/solid-router'
 import { toast } from 'solid-sonner'
 import { Alert, AlertDescription, AlertTitle } from '~/components/ui/alert'
@@ -22,10 +23,17 @@ import {
   TextFieldLabel,
 } from '~/components/ui/text-field'
 import { useInvalidateSession } from '~/integrations/better-auth/session'
-import { getSession, signUp } from '~/lib/auth.functions'
-import { signUpSchema } from '~/lib/schemas'
+import { getSession, signIn } from '~/lib/auth.functions'
+import { signInSchema } from '~/lib/schemas'
 
-export const Route = createFileRoute('/register')({
+type LoginSearch = {
+  redirect?: string
+}
+
+export const Route = createFileRoute('/_authentication/login')({
+  validateSearch: (search: Record<string, unknown>): LoginSearch => ({
+    redirect: typeof search.redirect === 'string' ? search.redirect : undefined,
+  }),
   beforeLoad: async () => {
     // 已登录直接回首页
     const session = await getSession()
@@ -33,17 +41,16 @@ export const Route = createFileRoute('/register')({
       throw redirect({ to: '/' })
     }
   },
-  component: RegisterPage,
+  component: LoginPage,
 })
 
-function RegisterPage() {
+function LoginPage() {
   const navigate = useNavigate()
+  const search = useSearch({ from: '/_authentication/login' })
   const invalidateSession = useInvalidateSession()
 
-  const [name, setName] = createSignal('')
   const [email, setEmail] = createSignal('')
   const [password, setPassword] = createSignal('')
-  const [confirm, setConfirm] = createSignal('')
   const [error, setError] = createSignal<string | null>(null)
   const [submitting, setSubmitting] = createSignal(false)
 
@@ -51,13 +58,7 @@ function RegisterPage() {
     e.preventDefault()
     setError(null)
 
-    if (password() !== confirm()) {
-      setError('两次输入的密码不一致')
-      return
-    }
-
-    const parsed = signUpSchema.safeParse({
-      name: name(),
+    const parsed = signInSchema.safeParse({
       email: email(),
       password: password(),
     })
@@ -68,12 +69,14 @@ function RegisterPage() {
 
     setSubmitting(true)
     try {
-      await signUp({ data: parsed.data })
+      await signIn({ data: parsed.data })
       await invalidateSession()
-      toast.success('注册成功，已自动登录')
-      navigate({ to: '/' })
+      toast.success('登录成功')
+      // 只允许跳转到站内已知页面
+      const target = search().redirect === '/dashboard' ? '/dashboard' : '/'
+      navigate({ to: target })
     } catch (err) {
-      setError(err instanceof Error ? err.message : '注册失败，请稍后再试')
+      setError(err instanceof Error ? err.message : '登录失败，请稍后再试')
     } finally {
       setSubmitting(false)
     }
@@ -83,21 +86,17 @@ function RegisterPage() {
     <div class="flex min-h-screen items-center justify-center p-4">
       <Card class="w-full max-w-sm">
         <CardHeader>
-          <CardTitle>注册</CardTitle>
-          <CardDescription>创建账号，解决今晚吃什么</CardDescription>
+          <CardTitle>登录</CardTitle>
+          <CardDescription>登录你的账号，记录今晚吃什么</CardDescription>
         </CardHeader>
         <form onSubmit={onSubmit}>
           <CardContent class="space-y-4">
             <Show when={error()}>
               <Alert variant="destructive">
-                <AlertTitle>注册失败</AlertTitle>
+                <AlertTitle>登录失败</AlertTitle>
                 <AlertDescription>{error()}</AlertDescription>
               </Alert>
             </Show>
-            <TextField value={name()} onChange={setName}>
-              <TextFieldLabel>昵称</TextFieldLabel>
-              <TextFieldInput placeholder="你的昵称" autocomplete="nickname" />
-            </TextField>
             <TextField value={email()} onChange={setEmail}>
               <TextFieldLabel>邮箱</TextFieldLabel>
               <TextFieldInput
@@ -110,27 +109,24 @@ function RegisterPage() {
               <TextFieldLabel>密码</TextFieldLabel>
               <TextFieldInput
                 type="password"
-                placeholder="至少 8 位"
-                autocomplete="new-password"
-              />
-            </TextField>
-            <TextField value={confirm()} onChange={setConfirm}>
-              <TextFieldLabel>确认密码</TextFieldLabel>
-              <TextFieldInput
-                type="password"
-                placeholder="再输一遍"
-                autocomplete="new-password"
+                placeholder="••••••••"
+                autocomplete="current-password"
               />
             </TextField>
           </CardContent>
           <CardFooter class="flex-col gap-3">
             <Button type="submit" class="w-full" disabled={submitting()}>
-              {submitting() ? '注册中…' : '注册'}
+              {submitting() ? '登录中…' : '登录'}
             </Button>
-            <div class="text-sm">
-              已有账号？
-              <Link to="/login" class="text-primary hover:underline">
-                去登录
+            <div class="flex w-full items-center justify-between text-sm">
+              <Link
+                to="/forgot-password"
+                class="text-muted-foreground hover:text-foreground"
+              >
+                忘记密码？
+              </Link>
+              <Link to="/register" class="text-primary hover:underline">
+                注册新账号
               </Link>
             </div>
           </CardFooter>

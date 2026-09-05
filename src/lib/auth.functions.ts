@@ -1,5 +1,8 @@
 import { createServerFn } from '@tanstack/solid-start'
 import { getRequestHeaders } from '@tanstack/solid-start/server'
+import { count } from 'drizzle-orm'
+import db from '~/db'
+import { users } from '~/db/auth.schema'
 import { auth } from '~/lib/auth'
 import {
   deleteAccountSchema,
@@ -31,6 +34,12 @@ export const ensureSession = createServerFn({ method: 'GET' }).handler(
     return session
   },
 )
+
+// 用户总数（单用户应用：已有用户时禁止再注册）
+export const countUsers = createServerFn({ method: 'GET' }).handler(async () => {
+  const rows = await db.select({ total: count() }).from(users)
+  return rows[0]?.total ?? 0
+})
 
 // 注册：成功后 better-auth 会直接创建会话（cookie 由 tanstackStartCookies 插件落盘）
 export const signUp = createServerFn({ method: 'POST' })

@@ -9,103 +9,113 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as HealthRouteImport } from './routes/health'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as LuckyRouteImport } from './routes/lucky'
-import { Route as RegisterRouteImport } from './routes/register'
-import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as CategoriesIndexRouteImport } from './routes/categories/index'
-import { Route as CategoriesIdRouteImport } from './routes/categories/$id'
-import { Route as RecipesIndexRouteImport } from './routes/recipes/index'
-import { Route as RecipesIdRouteImport } from './routes/recipes/$id'
+import { Route as PublicRouteRouteImport } from './routes/_public/route'
+import { Route as AuthenticatedDashboardRouteRouteImport } from './routes/_authenticated/dashboard/route'
+import { Route as AuthenticationForgotPasswordRouteImport } from './routes/_authentication/forgot-password'
+import { Route as AuthenticationLoginRouteImport } from './routes/_authentication/login'
+import { Route as AuthenticationRegisterRouteImport } from './routes/_authentication/register'
+import { Route as AuthenticationResetPasswordRouteImport } from './routes/_authentication/reset-password'
+import { Route as MiscHealthRouteImport } from './routes/_misc/health'
+import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as PublicLuckyRouteImport } from './routes/_public/lucky'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
 import { Route as AuthenticatedDashboardCategoriesRouteImport } from './routes/_authenticated/dashboard/categories'
 import { Route as AuthenticatedDashboardRecipesRouteImport } from './routes/_authenticated/dashboard/recipes'
+import { Route as PublicCategoriesIndexRouteImport } from './routes/_public/categories/index'
+import { Route as PublicCategoriesIdRouteImport } from './routes/_public/categories/$id'
+import { Route as PublicRecipesIndexRouteImport } from './routes/_public/recipes/index'
+import { Route as PublicRecipesIdRouteImport } from './routes/_public/recipes/$id'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiCategoriesIndexRouteImport } from './routes/api/categories/index'
 import { Route as ApiCategoriesIdRouteImport } from './routes/api/categories/$id'
 import { Route as ApiRecipesIndexRouteImport } from './routes/api/recipes/index'
 import { Route as ApiRecipesIdRouteImport } from './routes/api/recipes/$id'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const PublicRouteRoute = PublicRouteRouteImport.update({
+  id: '/_public',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HealthRoute = HealthRouteImport.update({
-  id: '/health',
-  path: '/health',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
+const AuthenticatedDashboardRouteRoute =
+  AuthenticatedDashboardRouteRouteImport.update({
+    id: '/_authenticated/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticationForgotPasswordRoute =
+  AuthenticationForgotPasswordRouteImport.update({
+    id: '/_authentication/forgot-password',
+    path: '/forgot-password',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AuthenticationLoginRoute = AuthenticationLoginRouteImport.update({
+  id: '/_authentication/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LuckyRoute = LuckyRouteImport.update({
-  id: '/lucky',
-  path: '/lucky',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RegisterRoute = RegisterRouteImport.update({
-  id: '/register',
+const AuthenticationRegisterRoute = AuthenticationRegisterRouteImport.update({
+  id: '/_authentication/register',
   path: '/register',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ResetPasswordRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
+const AuthenticationResetPasswordRoute =
+  AuthenticationResetPasswordRouteImport.update({
+    id: '/_authentication/reset-password',
+    path: '/reset-password',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const MiscHealthRoute = MiscHealthRouteImport.update({
+  id: '/_misc/health',
+  path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => AuthenticatedRouteRoute,
+const PublicIndexRoute = PublicIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PublicRouteRoute,
 } as any)
-const CategoriesIndexRoute = CategoriesIndexRouteImport.update({
-  id: '/categories/',
-  path: '/categories/',
-  getParentRoute: () => rootRouteImport,
+const PublicLuckyRoute = PublicLuckyRouteImport.update({
+  id: '/lucky',
+  path: '/lucky',
+  getParentRoute: () => PublicRouteRoute,
 } as any)
-const CategoriesIdRoute = CategoriesIdRouteImport.update({
-  id: '/categories/$id',
-  path: '/categories/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RecipesIndexRoute = RecipesIndexRouteImport.update({
-  id: '/recipes/',
-  path: '/recipes/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RecipesIdRoute = RecipesIdRouteImport.update({
-  id: '/recipes/$id',
-  path: '/recipes/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardRouteRoute,
+  } as any)
 const AuthenticatedDashboardCategoriesRoute =
   AuthenticatedDashboardCategoriesRouteImport.update({
     id: '/categories',
     path: '/categories',
-    getParentRoute: () => AuthenticatedDashboardRoute,
+    getParentRoute: () => AuthenticatedDashboardRouteRoute,
   } as any)
 const AuthenticatedDashboardRecipesRoute =
   AuthenticatedDashboardRecipesRouteImport.update({
     id: '/recipes',
     path: '/recipes',
-    getParentRoute: () => AuthenticatedDashboardRoute,
+    getParentRoute: () => AuthenticatedDashboardRouteRoute,
   } as any)
+const PublicCategoriesIndexRoute = PublicCategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const PublicCategoriesIdRoute = PublicCategoriesIdRouteImport.update({
+  id: '/categories/$id',
+  path: '/categories/$id',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const PublicRecipesIndexRoute = PublicRecipesIndexRouteImport.update({
+  id: '/recipes/',
+  path: '/recipes/',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
+const PublicRecipesIdRoute = PublicRecipesIdRouteImport.update({
+  id: '/recipes/$id',
+  path: '/recipes/$id',
+  getParentRoute: () => PublicRouteRoute,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -133,67 +143,69 @@ const ApiRecipesIdRoute = ApiRecipesIdRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/health': typeof HealthRoute
-  '/login': typeof LoginRoute
-  '/lucky': typeof LuckyRoute
-  '/register': typeof RegisterRoute
-  '/reset-password': typeof ResetPasswordRoute
-  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
-  '/categories/$id': typeof CategoriesIdRoute
-  '/recipes/$id': typeof RecipesIdRoute
-  '/categories/': typeof CategoriesIndexRoute
-  '/recipes/': typeof RecipesIndexRoute
+  '/': typeof PublicIndexRoute
+  '/dashboard': typeof AuthenticatedDashboardRouteRouteWithChildren
+  '/forgot-password': typeof AuthenticationForgotPasswordRoute
+  '/login': typeof AuthenticationLoginRoute
+  '/register': typeof AuthenticationRegisterRoute
+  '/reset-password': typeof AuthenticationResetPasswordRoute
+  '/health': typeof MiscHealthRoute
+  '/lucky': typeof PublicLuckyRoute
   '/dashboard/categories': typeof AuthenticatedDashboardCategoriesRoute
   '/dashboard/recipes': typeof AuthenticatedDashboardRecipesRoute
+  '/categories/$id': typeof PublicCategoriesIdRoute
+  '/recipes/$id': typeof PublicRecipesIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/categories/$id': typeof ApiCategoriesIdRoute
   '/api/recipes/$id': typeof ApiRecipesIdRoute
+  '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/categories/': typeof PublicCategoriesIndexRoute
+  '/recipes/': typeof PublicRecipesIndexRoute
   '/api/categories/': typeof ApiCategoriesIndexRoute
   '/api/recipes/': typeof ApiRecipesIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/health': typeof HealthRoute
-  '/login': typeof LoginRoute
-  '/lucky': typeof LuckyRoute
-  '/register': typeof RegisterRoute
-  '/reset-password': typeof ResetPasswordRoute
-  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
-  '/categories/$id': typeof CategoriesIdRoute
-  '/recipes/$id': typeof RecipesIdRoute
-  '/categories': typeof CategoriesIndexRoute
-  '/recipes': typeof RecipesIndexRoute
+  '/forgot-password': typeof AuthenticationForgotPasswordRoute
+  '/login': typeof AuthenticationLoginRoute
+  '/register': typeof AuthenticationRegisterRoute
+  '/reset-password': typeof AuthenticationResetPasswordRoute
+  '/health': typeof MiscHealthRoute
+  '/lucky': typeof PublicLuckyRoute
+  '/': typeof PublicIndexRoute
   '/dashboard/categories': typeof AuthenticatedDashboardCategoriesRoute
   '/dashboard/recipes': typeof AuthenticatedDashboardRecipesRoute
+  '/categories/$id': typeof PublicCategoriesIdRoute
+  '/recipes/$id': typeof PublicRecipesIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/categories/$id': typeof ApiCategoriesIdRoute
   '/api/recipes/$id': typeof ApiRecipesIdRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/categories': typeof PublicCategoriesIndexRoute
+  '/recipes': typeof PublicRecipesIndexRoute
   '/api/categories': typeof ApiCategoriesIndexRoute
   '/api/recipes': typeof ApiRecipesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/health': typeof HealthRoute
-  '/login': typeof LoginRoute
-  '/lucky': typeof LuckyRoute
-  '/register': typeof RegisterRoute
-  '/reset-password': typeof ResetPasswordRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
-  '/categories/$id': typeof CategoriesIdRoute
-  '/recipes/$id': typeof RecipesIdRoute
-  '/categories/': typeof CategoriesIndexRoute
-  '/recipes/': typeof RecipesIndexRoute
+  '/_public': typeof PublicRouteRouteWithChildren
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteRouteWithChildren
+  '/_authentication/forgot-password': typeof AuthenticationForgotPasswordRoute
+  '/_authentication/login': typeof AuthenticationLoginRoute
+  '/_authentication/register': typeof AuthenticationRegisterRoute
+  '/_authentication/reset-password': typeof AuthenticationResetPasswordRoute
+  '/_misc/health': typeof MiscHealthRoute
+  '/_public/lucky': typeof PublicLuckyRoute
+  '/_public/': typeof PublicIndexRoute
   '/_authenticated/dashboard/categories': typeof AuthenticatedDashboardCategoriesRoute
   '/_authenticated/dashboard/recipes': typeof AuthenticatedDashboardRecipesRoute
+  '/_public/categories/$id': typeof PublicCategoriesIdRoute
+  '/_public/recipes/$id': typeof PublicRecipesIdRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/categories/$id': typeof ApiCategoriesIdRoute
   '/api/recipes/$id': typeof ApiRecipesIdRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_public/categories/': typeof PublicCategoriesIndexRoute
+  '/_public/recipes/': typeof PublicRecipesIndexRoute
   '/api/categories/': typeof ApiCategoriesIndexRoute
   '/api/recipes/': typeof ApiRecipesIndexRoute
 }
@@ -201,82 +213,79 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/dashboard'
     | '/forgot-password'
-    | '/health'
     | '/login'
-    | '/lucky'
     | '/register'
     | '/reset-password'
-    | '/dashboard'
-    | '/categories/$id'
-    | '/recipes/$id'
-    | '/categories/'
-    | '/recipes/'
+    | '/health'
+    | '/lucky'
     | '/dashboard/categories'
     | '/dashboard/recipes'
+    | '/categories/$id'
+    | '/recipes/$id'
     | '/api/auth/$'
     | '/api/categories/$id'
     | '/api/recipes/$id'
+    | '/dashboard/'
+    | '/categories/'
+    | '/recipes/'
     | '/api/categories/'
     | '/api/recipes/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/forgot-password'
-    | '/health'
     | '/login'
-    | '/lucky'
     | '/register'
     | '/reset-password'
-    | '/dashboard'
-    | '/categories/$id'
-    | '/recipes/$id'
-    | '/categories'
-    | '/recipes'
+    | '/health'
+    | '/lucky'
+    | '/'
     | '/dashboard/categories'
     | '/dashboard/recipes'
+    | '/categories/$id'
+    | '/recipes/$id'
     | '/api/auth/$'
     | '/api/categories/$id'
     | '/api/recipes/$id'
+    | '/dashboard'
+    | '/categories'
+    | '/recipes'
     | '/api/categories'
     | '/api/recipes'
   id:
     | '__root__'
-    | '/'
-    | '/_authenticated'
-    | '/forgot-password'
-    | '/health'
-    | '/login'
-    | '/lucky'
-    | '/register'
-    | '/reset-password'
+    | '/_public'
     | '/_authenticated/dashboard'
-    | '/categories/$id'
-    | '/recipes/$id'
-    | '/categories/'
-    | '/recipes/'
+    | '/_authentication/forgot-password'
+    | '/_authentication/login'
+    | '/_authentication/register'
+    | '/_authentication/reset-password'
+    | '/_misc/health'
+    | '/_public/lucky'
+    | '/_public/'
     | '/_authenticated/dashboard/categories'
     | '/_authenticated/dashboard/recipes'
+    | '/_public/categories/$id'
+    | '/_public/recipes/$id'
     | '/api/auth/$'
     | '/api/categories/$id'
     | '/api/recipes/$id'
+    | '/_authenticated/dashboard/'
+    | '/_public/categories/'
+    | '/_public/recipes/'
     | '/api/categories/'
     | '/api/recipes/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
-  ForgotPasswordRoute: typeof ForgotPasswordRoute
-  HealthRoute: typeof HealthRoute
-  LoginRoute: typeof LoginRoute
-  LuckyRoute: typeof LuckyRoute
-  RegisterRoute: typeof RegisterRoute
-  ResetPasswordRoute: typeof ResetPasswordRoute
-  CategoriesIdRoute: typeof CategoriesIdRoute
-  RecipesIdRoute: typeof RecipesIdRoute
-  CategoriesIndexRoute: typeof CategoriesIndexRoute
-  RecipesIndexRoute: typeof RecipesIndexRoute
+  PublicRouteRoute: typeof PublicRouteRouteWithChildren
+  AuthenticatedDashboardRouteRoute: typeof AuthenticatedDashboardRouteRouteWithChildren
+  AuthenticationForgotPasswordRoute: typeof AuthenticationForgotPasswordRoute
+  AuthenticationLoginRoute: typeof AuthenticationLoginRoute
+  AuthenticationRegisterRoute: typeof AuthenticationRegisterRoute
+  AuthenticationResetPasswordRoute: typeof AuthenticationResetPasswordRoute
+  MiscHealthRoute: typeof MiscHealthRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiCategoriesIdRoute: typeof ApiCategoriesIdRoute
   ApiRecipesIdRoute: typeof ApiRecipesIdRoute
@@ -286,110 +295,117 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/solid-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
+    '/_public': {
+      id: '/_public'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/health': {
-      id: '/health'
-      path: '/health'
-      fullPath: '/health'
-      preLoaderRoute: typeof HealthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lucky': {
-      id: '/lucky'
-      path: '/lucky'
-      fullPath: '/lucky'
-      preLoaderRoute: typeof LuckyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/register': {
-      id: '/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
+      preLoaderRoute: typeof PublicRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/categories/': {
-      id: '/categories/'
-      path: '/categories'
-      fullPath: '/categories/'
-      preLoaderRoute: typeof CategoriesIndexRouteImport
+      preLoaderRoute: typeof AuthenticatedDashboardRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/categories/$id': {
-      id: '/categories/$id'
-      path: '/categories/$id'
-      fullPath: '/categories/$id'
-      preLoaderRoute: typeof CategoriesIdRouteImport
+    '/_authentication/forgot-password': {
+      id: '/_authentication/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof AuthenticationForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/recipes/': {
-      id: '/recipes/'
-      path: '/recipes'
-      fullPath: '/recipes/'
-      preLoaderRoute: typeof RecipesIndexRouteImport
+    '/_authentication/login': {
+      id: '/_authentication/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthenticationLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/recipes/$id': {
-      id: '/recipes/$id'
-      path: '/recipes/$id'
-      fullPath: '/recipes/$id'
-      preLoaderRoute: typeof RecipesIdRouteImport
+    '/_authentication/register': {
+      id: '/_authentication/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof AuthenticationRegisterRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authentication/reset-password': {
+      id: '/_authentication/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof AuthenticationResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_misc/health': {
+      id: '/_misc/health'
+      path: '/health'
+      fullPath: '/health'
+      preLoaderRoute: typeof MiscHealthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_public/': {
+      id: '/_public/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/lucky': {
+      id: '/_public/lucky'
+      path: '/lucky'
+      fullPath: '/lucky'
+      preLoaderRoute: typeof PublicLuckyRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRouteRoute
     }
     '/_authenticated/dashboard/categories': {
       id: '/_authenticated/dashboard/categories'
       path: '/categories'
       fullPath: '/dashboard/categories'
       preLoaderRoute: typeof AuthenticatedDashboardCategoriesRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
+      parentRoute: typeof AuthenticatedDashboardRouteRoute
     }
     '/_authenticated/dashboard/recipes': {
       id: '/_authenticated/dashboard/recipes'
       path: '/recipes'
       fullPath: '/dashboard/recipes'
       preLoaderRoute: typeof AuthenticatedDashboardRecipesRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
+      parentRoute: typeof AuthenticatedDashboardRouteRoute
+    }
+    '/_public/categories/': {
+      id: '/_public/categories/'
+      path: '/categories'
+      fullPath: '/categories/'
+      preLoaderRoute: typeof PublicCategoriesIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/categories/$id': {
+      id: '/_public/categories/$id'
+      path: '/categories/$id'
+      fullPath: '/categories/$id'
+      preLoaderRoute: typeof PublicCategoriesIdRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/recipes/': {
+      id: '/_public/recipes/'
+      path: '/recipes'
+      fullPath: '/recipes/'
+      preLoaderRoute: typeof PublicRecipesIndexRouteImport
+      parentRoute: typeof PublicRouteRoute
+    }
+    '/_public/recipes/$id': {
+      id: '/_public/recipes/$id'
+      path: '/recipes/$id'
+      fullPath: '/recipes/$id'
+      preLoaderRoute: typeof PublicRecipesIdRouteImport
+      parentRoute: typeof PublicRouteRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -429,47 +445,56 @@ declare module '@tanstack/solid-router' {
   }
 }
 
-interface AuthenticatedDashboardRouteChildren {
-  AuthenticatedDashboardCategoriesRoute: typeof AuthenticatedDashboardCategoriesRoute
-  AuthenticatedDashboardRecipesRoute: typeof AuthenticatedDashboardRecipesRoute
+interface PublicRouteRouteChildren {
+  PublicLuckyRoute: typeof PublicLuckyRoute
+  PublicIndexRoute: typeof PublicIndexRoute
+  PublicCategoriesIdRoute: typeof PublicCategoriesIdRoute
+  PublicRecipesIdRoute: typeof PublicRecipesIdRoute
+  PublicCategoriesIndexRoute: typeof PublicCategoriesIndexRoute
+  PublicRecipesIndexRoute: typeof PublicRecipesIndexRoute
 }
 
-const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
+const PublicRouteRouteChildren: PublicRouteRouteChildren = {
+  PublicLuckyRoute: PublicLuckyRoute,
+  PublicIndexRoute: PublicIndexRoute,
+  PublicCategoriesIdRoute: PublicCategoriesIdRoute,
+  PublicRecipesIdRoute: PublicRecipesIdRoute,
+  PublicCategoriesIndexRoute: PublicCategoriesIndexRoute,
+  PublicRecipesIndexRoute: PublicRecipesIndexRoute,
+}
+
+const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
+  PublicRouteRouteChildren,
+)
+
+interface AuthenticatedDashboardRouteRouteChildren {
+  AuthenticatedDashboardCategoriesRoute: typeof AuthenticatedDashboardCategoriesRoute
+  AuthenticatedDashboardRecipesRoute: typeof AuthenticatedDashboardRecipesRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+}
+
+const AuthenticatedDashboardRouteRouteChildren: AuthenticatedDashboardRouteRouteChildren =
   {
     AuthenticatedDashboardCategoriesRoute:
       AuthenticatedDashboardCategoriesRoute,
     AuthenticatedDashboardRecipesRoute: AuthenticatedDashboardRecipesRoute,
+    AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   }
 
-const AuthenticatedDashboardRouteWithChildren =
-  AuthenticatedDashboardRoute._addFileChildren(
-    AuthenticatedDashboardRouteChildren,
+const AuthenticatedDashboardRouteRouteWithChildren =
+  AuthenticatedDashboardRouteRoute._addFileChildren(
+    AuthenticatedDashboardRouteRouteChildren,
   )
 
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
-}
-
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
-  ForgotPasswordRoute: ForgotPasswordRoute,
-  HealthRoute: HealthRoute,
-  LoginRoute: LoginRoute,
-  LuckyRoute: LuckyRoute,
-  RegisterRoute: RegisterRoute,
-  ResetPasswordRoute: ResetPasswordRoute,
-  CategoriesIdRoute: CategoriesIdRoute,
-  RecipesIdRoute: RecipesIdRoute,
-  CategoriesIndexRoute: CategoriesIndexRoute,
-  RecipesIndexRoute: RecipesIndexRoute,
+  PublicRouteRoute: PublicRouteRouteWithChildren,
+  AuthenticatedDashboardRouteRoute:
+    AuthenticatedDashboardRouteRouteWithChildren,
+  AuthenticationForgotPasswordRoute: AuthenticationForgotPasswordRoute,
+  AuthenticationLoginRoute: AuthenticationLoginRoute,
+  AuthenticationRegisterRoute: AuthenticationRegisterRoute,
+  AuthenticationResetPasswordRoute: AuthenticationResetPasswordRoute,
+  MiscHealthRoute: MiscHealthRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiCategoriesIdRoute: ApiCategoriesIdRoute,
   ApiRecipesIdRoute: ApiRecipesIdRoute,
