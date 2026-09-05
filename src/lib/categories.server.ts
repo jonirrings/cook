@@ -44,23 +44,21 @@ export const listServerCategories = createServerOnlyFn(async () => {
   return rows
 })
 
-export const createServerCategory = createServerOnlyFn(
-  async (name: string) => {
-    // slug 分两步：先占位保证唯一，再用自增 id 生成正式 slug（与 seed 风格一致）
-    const created = await db
-      .insert(categories)
-      .values({ name, slug: `tmp-${crypto.randomUUID()}` })
-      .returning()
-      .get()
+export const createServerCategory = createServerOnlyFn(async (name: string) => {
+  // slug 分两步：先占位保证唯一，再用自增 id 生成正式 slug（与 seed 风格一致）
+  const created = await db
+    .insert(categories)
+    .values({ name, slug: `tmp-${crypto.randomUUID()}` })
+    .returning()
+    .get()
 
-    await db
-      .update(categories)
-      .set({ slug: `cat-${created.id}` })
-      .where(eq(categories.id, created.id))
+  await db
+    .update(categories)
+    .set({ slug: `cat-${created.id}` })
+    .where(eq(categories.id, created.id))
 
-    return created.id
-  },
-)
+  return created.id
+})
 
 export const updateServerCategory = createServerOnlyFn(
   async (id: number, name: string) => {

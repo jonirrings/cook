@@ -20,8 +20,7 @@
     "db:generate:remote": "NODE_ENV=production drizzle-kit generate",
     "db:migrate:mock": "NODE_ENV=development drizzle-kit migrate",
     "db:migrate:prod": "wrangler d1 migrations apply cook-db --remote",
-    "db:migrate:local": "wrangler d1 migrations apply cook-db --local",
-    "db:seed": "tsx drizzle/seed.ts"
+    "db:migrate:local": "wrangler d1 migrations apply cook-db --local"
   },
   "dependencies": {
     "@ark-ui/solid": "^5.39.1",

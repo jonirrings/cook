@@ -46,7 +46,7 @@ type ColProps = ComponentProps<'div'> & {
 }
 
 const Col: Component<ColProps> = (rawProps) => {
-  const props = mergeProps({ span: 1 as Span }, rawProps)
+  const props = mergeProps({ span: 1 }, rawProps)
   const [local, others] = splitProps(props, [
     'span',
     'spanSm',

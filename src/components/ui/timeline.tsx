@@ -1,5 +1,6 @@
-import type { ComponentProps, ParentComponent } from 'solid-js'
-import {
+import type {
+  ComponentProps,
+  ParentComponent,
   For,
   mergeProps,
   Show,

@@ -29,7 +29,7 @@ const BarList = <T,>(rawProps: BarListProps<T>) => {
   const props = mergeProps(
     {
       valueFormatter: defaultValueFormatter,
-      sortOrder: 'descending' as SortOrder,
+      sortOrder: 'descending',
     },
     rawProps,
   )

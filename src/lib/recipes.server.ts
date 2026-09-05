@@ -16,7 +16,10 @@ export type RecipeInput = {
 type CategoryRow = typeof categories.$inferSelect
 
 // 对外暴露的行类型：JSON 字段已解析、附带分类列表
-export type RecipeRow = Omit<typeof recipes.$inferSelect, 'ingredients' | 'steps'> & {
+export type RecipeRow = Omit<
+  typeof recipes.$inferSelect,
+  'ingredients' | 'steps'
+> & {
   ingredients: string[] | null
   steps: string[] | null
   categories: CategoryRow[]
@@ -53,9 +56,9 @@ function parseJsonArray(value: string | null): string[] | null {
   }
 }
 
-function parseRow<T extends { ingredients: string | null; steps: string | null }>(
-  row: T,
-) {
+function parseRow<
+  T extends { ingredients: string | null; steps: string | null },
+>(row: T) {
   return {
     ...row,
     ingredients: parseJsonArray(row.ingredients),
@@ -164,14 +167,12 @@ export const createServerRecipe = createServerOnlyFn(
       .where(eq(recipes.id, created.id))
 
     if (input.categoryIds?.length) {
-      await db
-        .insert(recipeCategories)
-        .values(
-          input.categoryIds.map((categoryId) => ({
-            recipeId: created.id,
-            categoryId,
-          })),
-        )
+      await db.insert(recipeCategories).values(
+        input.categoryIds.map((categoryId) => ({
+          recipeId: created.id,
+          categoryId,
+        })),
+      )
     }
 
     return created.id
@@ -188,9 +189,7 @@ export const updateServerRecipe = createServerOnlyFn(
     await db.update(recipes).set(toRow(input)).where(eq(recipes.id, id))
 
     // 重建分类关联
-    await db
-      .delete(recipeCategories)
-      .where(eq(recipeCategories.recipeId, id))
+    await db.delete(recipeCategories).where(eq(recipeCategories.recipeId, id))
     if (input.categoryIds?.length) {
       await db
         .insert(recipeCategories)

@@ -1,4 +1,9 @@
-import {ClientOnly, createFileRoute, Link, Outlet} from '@tanstack/solid-router'
+import {
+  ClientOnly,
+  createFileRoute,
+  Link,
+  Outlet,
+} from '@tanstack/solid-router'
 import BetterAuthHeader from '~/integrations/better-auth/header-user'
 
 export const Route = createFileRoute('/_public')({

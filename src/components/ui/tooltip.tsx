@@ -1,5 +1,4 @@
-import type { ValidComponent } from 'solid-js'
-import { splitProps, type Component } from 'solid-js'
+import type { ValidComponent, splitProps, type Component } from 'solid-js'
 
 import type { PolymorphicProps } from '@kobalte/core/polymorphic'
 import * as TooltipPrimitive from '@kobalte/core/tooltip'

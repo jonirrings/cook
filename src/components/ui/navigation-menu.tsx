@@ -126,7 +126,7 @@ const NavigationMenuContent = <T extends ValidComponent = 'ul'>(
           'data-[orientation=horizontal]:data-[motion=from-end]:slide-in-from-right-52 data-[orientation=horizontal]:data-[motion=to-start]:slide-out-to-left-52',
           // top to bottom
           'data-[orientation=vertical]:data-[motion=from-start]:slide-in-from-top-52 data-[orientation=vertical]:data-[motion=to-end]:slide-out-to-bottom-52',
-          //bottom to top
+          // bottom to top
           'data-[orientation=vertical]:data-[motion=from-end]:slide-in-from-bottom-52 data-[orientation=vertical]:data-[motion=to-start]:slide-out-to-bottom-52',
           local.class,
         )}

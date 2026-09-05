@@ -52,13 +52,16 @@ export const categoriesRelations = relations(categories, ({ many }) => ({
   recipeCategories: many(recipeCategories),
 }))
 
-export const recipeCategoriesRelations = relations(recipeCategories, ({ one }) => ({
-  recipe: one(recipes, {
-    fields: [recipeCategories.recipeId],
-    references: [recipes.id],
+export const recipeCategoriesRelations = relations(
+  recipeCategories,
+  ({ one }) => ({
+    recipe: one(recipes, {
+      fields: [recipeCategories.recipeId],
+      references: [recipes.id],
+    }),
+    category: one(categories, {
+      fields: [recipeCategories.categoryId],
+      references: [categories.id],
+    }),
   }),
-  category: one(categories, {
-    fields: [recipeCategories.categoryId],
-    references: [categories.id],
-  }),
-}))
+)

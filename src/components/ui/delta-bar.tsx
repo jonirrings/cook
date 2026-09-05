@@ -1,10 +1,5 @@
-import {
-  mergeProps,
-  Show,
-  splitProps,
-  type Component,
-  type ComponentProps,
-} from 'solid-js'
+import { mergeProps, Show, splitProps } from 'solid-js'
+import type { Component, ComponentProps } from 'solid-js'
 
 import { cn } from '~/lib/utils'
 

@@ -22,10 +22,7 @@ type ProgressCircleProps = ComponentProps<'div'> & {
 }
 
 const ProgressCircle: Component<ProgressCircleProps> = (rawProps) => {
-  const props = mergeProps(
-    { size: 'md' as Size, showAnimation: true },
-    rawProps,
-  )
+  const props = mergeProps({ size: 'md', showAnimation: true }, rawProps)
   const [local, others] = splitProps(props, [
     'class',
     'children',

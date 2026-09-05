@@ -1,9 +1,16 @@
-import type { Component } from "solid-js"
-import { createEffect, createSignal, mergeProps, on, onCleanup, onMount } from "solid-js"
-import { unwrap } from "solid-js/store"
+import type { Component } from 'solid-js'
+import {
+  createEffect,
+  createSignal,
+  mergeProps,
+  on,
+  onCleanup,
+  onMount,
+} from 'solid-js'
+import { unwrap } from 'solid-js/store'
 
-import type { Ref } from "@solid-primitives/refs"
-import { mergeRefs } from "@solid-primitives/refs"
+import type { Ref } from '@solid-primitives/refs'
+import { mergeRefs } from '@solid-primitives/refs'
 import type {
   ChartComponent,
   ChartData,
@@ -12,8 +19,8 @@ import type {
   Plugin as ChartPlugin,
   ChartType,
   ChartTypeRegistry,
-  TooltipModel
-} from "chart.js"
+  TooltipModel,
+} from 'chart.js'
 import {
   ArcElement,
   BarController,
@@ -34,8 +41,8 @@ import {
   RadarController,
   RadialLinearScale,
   ScatterController,
-  Tooltip
-} from "chart.js"
+  Tooltip,
+} from 'chart.js'
 
 type TypedChartProps = {
   data: ChartData
@@ -63,20 +70,20 @@ const BaseChart: Component<ChartProps> = (rawProps) => {
     {
       width: 512,
       height: 512,
-      options: { responsive: true } as ChartOptions,
-      plugins: [] as ChartPlugin[]
+      options: { responsive: true },
+      plugins: [] as ChartPlugin[],
     },
-    rawProps
+    rawProps,
   )
 
   const init = () => {
-    const ctx = canvasRef()?.getContext("2d") as ChartItem
+    const ctx = canvasRef()?.getContext('2d') as ChartItem
     const config = unwrap(props)
     const chart = new Chart(ctx, {
       type: config.type,
       data: config.data,
       options: config.options,
-      plugins: config.plugins
+      plugins: config.plugins,
     })
     setChart(chart)
   }
@@ -90,8 +97,8 @@ const BaseChart: Component<ChartProps> = (rawProps) => {
         chart()!.data = props.data
         chart()!.update()
       },
-      { defer: true }
-    )
+      { defer: true },
+    ),
   )
 
   createEffect(
@@ -101,8 +108,8 @@ const BaseChart: Component<ChartProps> = (rawProps) => {
         chart()!.options = props.options
         chart()!.update()
       },
-      { defer: true }
-    )
+      { defer: true },
+    ),
   )
 
   createEffect(
@@ -111,8 +118,8 @@ const BaseChart: Component<ChartProps> = (rawProps) => {
       () => {
         chart()!.resize(props.width, props.height)
       },
-      { defer: true }
-    )
+      { defer: true },
+    ),
   )
 
   createEffect(
@@ -124,8 +131,8 @@ const BaseChart: Component<ChartProps> = (rawProps) => {
         init()
         chart()!.resize(...dimensions)
       },
-      { defer: true }
-    )
+      { defer: true },
+    ),
   )
 
   onCleanup(() => {
@@ -144,16 +151,16 @@ const BaseChart: Component<ChartProps> = (rawProps) => {
 }
 
 function showTooltip(context: ChartContext) {
-  let el = document.getElementById("chartjs-tooltip")
+  let el = document.getElementById('chartjs-tooltip')
   if (!el) {
-    el = document.createElement("div")
-    el.id = "chartjs-tooltip"
+    el = document.createElement('div')
+    el.id = 'chartjs-tooltip'
     document.body.appendChild(el)
   }
 
   const model = context.tooltip
   if (model.opacity === 0 || !model.body) {
-    el.style.opacity = "0"
+    el.style.opacity = '0'
     return
   }
 
@@ -161,7 +168,7 @@ function showTooltip(context: ChartContext) {
     model.yAlign ?? `no-transform`
   }`
 
-  let content = ""
+  let content = ''
 
   model.title.forEach((title) => {
     content += `<h3 class="font-semibold leading-none tracking-tight">${title}</h3>`
@@ -182,19 +189,19 @@ function showTooltip(context: ChartContext) {
   el.innerHTML = content
 
   const pos = context.chart.canvas.getBoundingClientRect()
-  el.style.opacity = "1"
-  el.style.position = "absolute"
+  el.style.opacity = '1'
+  el.style.position = 'absolute'
   el.style.left = `${pos.left + window.scrollX + model.caretX}px`
   el.style.top = `${pos.top + window.scrollY + model.caretY}px`
-  el.style.pointerEvents = "none"
+  el.style.pointerEvents = 'none'
 }
 
 function createTypedChart(
   type: ChartType,
-  components: ChartComponent[]
+  components: ChartComponent[],
 ): Component<TypedChartProps> {
-  const chartsWithScales: ChartType[] = ["bar", "line", "scatter"]
-  const chartsWithLegends: ChartType[] = ["bar", "line"]
+  const chartsWithScales: ChartType[] = ['bar', 'line', 'scatter']
+  const chartsWithLegends: ChartType[] = ['bar', 'line']
 
   const options: ChartOptions = {
     responsive: true,
@@ -203,80 +210,86 @@ function createTypedChart(
       ? {
           x: {
             border: { display: false },
-            grid: { display: false }
+            grid: { display: false },
           },
           y: {
             border: {
               dash: [3],
               dashOffset: 3,
-              display: false
+              display: false,
             },
             grid: {
-              color: "hsla(240, 3.8%, 46.1%, 0.4)"
-            }
-          }
+              color: 'hsla(240, 3.8%, 46.1%, 0.4)',
+            },
+          },
         }
       : {},
     plugins: {
       legend: chartsWithLegends.includes(type)
         ? {
             display: true,
-            align: "end",
+            align: 'end',
             labels: {
               usePointStyle: true,
               boxWidth: 6,
               boxHeight: 6,
-              color: "hsl(240, 3.8%, 46.1%)",
-              font: { size: 14 }
-            }
+              color: 'hsl(240, 3.8%, 46.1%)',
+              font: { size: 14 },
+            },
           }
         : { display: false },
       tooltip: {
         enabled: false,
-        external: (context) => showTooltip(context)
-      }
-    }
+        external: (context) => showTooltip(context),
+      },
+    },
   }
 
   Chart.register(...components)
   return (props) => <BaseChart type={type} options={options} {...props} />
 }
 
-const BarChart = /* #__PURE__ */ createTypedChart("bar", [
+const BarChart = /* #__PURE__ */ createTypedChart('bar', [
   BarController,
   BarElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
 ])
-const BubbleChart = /* #__PURE__ */ createTypedChart("bubble", [
+const BubbleChart = /* #__PURE__ */ createTypedChart('bubble', [
   BubbleController,
   PointElement,
-  LinearScale
+  LinearScale,
 ])
-const DonutChart = /* #__PURE__ */ createTypedChart("doughnut", [DoughnutController, ArcElement])
-const LineChart = /* #__PURE__ */ createTypedChart("line", [
+const DonutChart = /* #__PURE__ */ createTypedChart('doughnut', [
+  DoughnutController,
+  ArcElement,
+])
+const LineChart = /* #__PURE__ */ createTypedChart('line', [
   LineController,
   LineElement,
   PointElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
 ])
-const PieChart = /* #__PURE__ */ createTypedChart("pie", [PieController, ArcElement])
-const PolarAreaChart = /* #__PURE__ */ createTypedChart("polarArea", [
+const PieChart = /* #__PURE__ */ createTypedChart('pie', [
+  PieController,
+  ArcElement,
+])
+const PolarAreaChart = /* #__PURE__ */ createTypedChart('polarArea', [
   PolarAreaController,
   ArcElement,
-  RadialLinearScale
+  RadialLinearScale,
 ])
-const RadarChart = /* #__PURE__ */ createTypedChart("radar", [
+const RadarChart = /* #__PURE__ */ createTypedChart('radar', [
   RadarController,
   LineElement,
   PointElement,
-  RadialLinearScale
+  RadialLinearScale,
 ])
-const ScatterChart = /* #__PURE__ */ createTypedChart("scatter", [
+const ScatterChart = /* #__PURE__ */ createTypedChart('scatter', [
   ScatterController,
   PointElement,
-  LinearScale
+  LinearScale,
 ])
 
 export {
@@ -288,5 +301,5 @@ export {
   PieChart,
   PolarAreaChart,
   RadarChart,
-  ScatterChart
+  ScatterChart,
 }
