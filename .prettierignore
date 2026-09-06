@@ -8,3 +8,4 @@ worker-configuration.d.ts
 *.md
 eslint.config.js
 prettier.config.js
+wrangler.jsonc

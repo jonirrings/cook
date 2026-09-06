@@ -34,8 +34,9 @@ const ProgressCircle: Component<ProgressCircleProps> = (rawProps) => {
   ])
 
   const value = () => getLimitedValue(local.value)
-  const radius = () => local.radius ?? sizes[local.size].radius
-  const strokeWidth = () => local.strokeWidth ?? sizes[local.size].strokeWidth
+  const radius = () => local.radius ?? sizes[local.size as Size].radius
+  const strokeWidth = () =>
+    local.strokeWidth ?? sizes[local.size as Size].strokeWidth
   const normalizedRadius = () => radius() - strokeWidth() / 2
   const circumference = () => normalizedRadius() * 2 * Math.PI
   const strokeDashoffset = () => (value() / 100) * circumference()

@@ -58,7 +58,7 @@ const Col: Component<ColProps> = (rawProps) => {
   return (
     <div
       class={cn(
-        colSpan[local.span],
+        colSpan[local.span as Span],
         local.spanSm && colSpanSm[local.spanSm],
         local.spanMd && colSpanMd[local.spanMd],
         local.spanLg && colSpanLg[local.spanLg],

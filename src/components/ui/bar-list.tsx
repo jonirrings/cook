@@ -59,7 +59,7 @@ const BarList = <T,>(rawProps: BarListProps<T>) => {
   return (
     <div
       class={cn('flex flex-col space-y-1.5', local.class)}
-      aria-sort={local.sortOrder}
+      aria-sort={local.sortOrder as SortOrder}
       {...others}
     >
       <For each={sortedData()}>

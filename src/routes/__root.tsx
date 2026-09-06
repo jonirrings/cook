@@ -1,9 +1,10 @@
 /// <reference types="vite/client" /
 import {
+  ClientOnly,
+  createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
-  createRootRouteWithContext,
 } from '@tanstack/solid-router'
 
 import { TanStackDevtools } from '@tanstack/solid-devtools'
@@ -19,6 +20,9 @@ import { Suspense } from 'solid-js'
 import { Toaster } from '~/components/ui/sonner'
 
 import styleCss from '../styles.css?url'
+import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary.tsx'
+import { NotFound } from '~/components/NotFound.tsx'
+import { RouterLoading } from '~/components/RouterLoading.tsx'
 
 export const Route = createRootRouteWithContext()({
   head: () => ({
@@ -37,10 +41,13 @@ export const Route = createRootRouteWithContext()({
       { name: 'theme-color', content: '#B12A34' },
     ],
   }),
-  shellComponent: RootComponent,
+  staleTime: Infinity,
+  errorComponent: DefaultCatchBoundary,
+  shellComponent: ShellComponent,
+  notFoundComponent: () => <NotFound />,
 })
 
-function RootComponent() {
+function ShellComponent() {
   return (
     <html>
       <head>
@@ -68,6 +75,9 @@ function RootComponent() {
           />
         </Suspense>
         <Toaster />
+        <ClientOnly>
+          <RouterLoading />
+        </ClientOnly>
         <Scripts />
       </body>
     </html>
