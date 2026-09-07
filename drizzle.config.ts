@@ -23,4 +23,6 @@ const localConfig = defineConfig({
   },
 })
 
-export default process.env.NODE_ENV === 'prod' ? remoteConfig : localConfig
+export default process.env.NODE_ENV === 'production'
+  ? remoteConfig
+  : localConfig
