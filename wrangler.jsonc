@@ -11,10 +11,25 @@
     "BETTER_AUTH_URL": "https://cook.jonirrings.com"
   },
   "routes": [
-    {
-      "pattern": "cook.jonirrings.com",
-      "custom_domain": true
-    }
+    { "pattern": "cook.jonirrings.com", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/cook.webmanifest", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/dinner-16.png", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/dinner-64.png", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/dinner-128.png", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/dinner-192.png", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/dinner-512.png", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/assets/*", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/_serverFn/*", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/api/*", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/dashboard*", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/categories*", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/recipes*", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/forget-password", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/login", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/register", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/reset-password", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/health", "zone_name": "jonirrings.com" },
+    { "pattern": "cook.jonirrings.com/lucky", "zone_name": "jonirrings.com" }
   ],
   "observability": {
     "enabled": true,
@@ -22,9 +37,6 @@
     "logs": {
       "enabled": true,
       "invocation_logs": true
-    },
-    "traces": {
-      "enabled": true
     }
   },
   "placement": {

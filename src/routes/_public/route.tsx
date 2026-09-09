@@ -14,8 +14,10 @@ const navLinks = [
   { to: '/', label: '首页' },
   { to: '/recipes', label: '菜谱' },
   { to: '/categories', label: '分类' },
-  { to: '/lucky', label: '随便看看' },
 ] as const
+
+const navLinkClass =
+  'rounded-md px-3 py-1.5 text-sm font-medium transition-colors'
 
 function PublicLayout() {
   return (
@@ -38,12 +40,23 @@ function PublicLayout() {
                   inactiveProps={{
                     class: 'text-muted-foreground hover:text-foreground',
                   }}
-                  class="rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
+                  class={navLinkClass}
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
+            {/* 随便看看 始终显示（小屏也保留） */}
+            <Link
+              to="/lucky"
+              activeOptions={{ exact: true }}
+              inactiveProps={{
+                class: 'text-muted-foreground hover:text-foreground',
+              }}
+              class={navLinkClass}
+            >
+              随便看看
+            </Link>
           </div>
           <ClientOnly>
             <BetterAuthHeader />

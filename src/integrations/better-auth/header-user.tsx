@@ -36,16 +36,20 @@ export default function BetterAuthHeader() {
             <Show
               when={user().image}
               fallback={
-                <div class="h-8 w-8 bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center">
+                <div class="hidden h-8 w-8 bg-neutral-100 dark:bg-neutral-800 sm:flex items-center justify-center">
                   <span class="text-xs font-medium text-neutral-600 dark:text-neutral-400">
                     {user().name.charAt(0).toUpperCase() || 'U'}
                   </span>
                 </div>
               }
             >
-              {(image) => <img src={image()} alt="" class="h-8 w-8" />}
+              {(image) => (
+                <img src={image()} alt="" class="hidden h-8 w-8 sm:block" />
+              )}
             </Show>
-            <span class="text-sm font-medium">{user().name}</span>
+            <span class="hidden sm:block text-sm font-medium">
+              {user().name}
+            </span>
             <Link to="/dashboard">
               <Button variant="ghost" size="sm">
                 我的账户

@@ -23,6 +23,8 @@ export const Route = createFileRoute('/_public/recipes/')({
   // 页码和页大小从 URL 读取，是分页状态的唯一来源
   validateSearch: (search: Record<string, unknown>): PaginationSearch =>
     paginationSearchSchema.parse(search),
+  // search 变化时重跑 loader（否则翻页只改 URL，内容不刷新）
+  loaderDeps: ({ search }) => ({ page: search.page, size: search.size }),
   // 数据走 loader：渲染前必定完成，SSR 与客户端首帧一致，避免 hydration 不一致
   loader: async ({ location }) => {
     const search = paginationSearchSchema.parse(location.search)
